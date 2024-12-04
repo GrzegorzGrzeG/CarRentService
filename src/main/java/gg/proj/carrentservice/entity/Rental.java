@@ -11,11 +11,11 @@ import java.util.Date;
 public class Rental {
 
     @Id
-    private Long id;
+    private String id;
     @NotNull
-    private Long carId;
+    private String carId;
     @NotNull
-    private Long customerId;
+    private String customerId;
     @NotNull(message = "Start date cannot be empty")
     private Date startDate;
     @Future(message = "End date must be in the future")

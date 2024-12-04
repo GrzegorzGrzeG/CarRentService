@@ -9,7 +9,7 @@ import java.util.Date;
 @Document(collection = "customers")
 public class Customer {
     @Id
-    private Long id;
+    private String id;
     @NotBlank(message = "First name cannot be empty")
     private String firstName;
     @NotBlank(message = "Last name cannot be empty")

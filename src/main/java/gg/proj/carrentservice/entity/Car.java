@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "cars")
 public class Car {
     @Id
-    private Long id;
+    private String id;
     @NotBlank(message = "Brand cannot be empty")
     private String brand;
     @NotBlank(message = "Model cannot be empty")
