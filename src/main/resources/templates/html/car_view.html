@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>car Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<div>
+    <h1>Car List</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Color</th>
+            <th>Registration number</th>
+            <th>VIN</th>
+            <th>Production Year</th>
+            <th>Engine capacity</th>
+            <th>Power</th>
+            <th>Fuel type</th>
+            <th>Body type</th>
+            <th>Transmission type</th>
+            <th>Number of seats</th>
+            <th>Price per day</th>
+            <th>Is available</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="element : ${car}">
+            <td th:text="${element.brand}"></td>
+            <td th:text="${element.model}"></td>
+            <td th:text="${element.color}"></td>
+            <td th:text="${element.registrationNumber}"></td>
+            <td th:text="${element.vin}"></td>
+            <td th:text="${element.productionYear}"></td>
+            <td th:text="${element.engineCapacity}"></td>
+            <td th:text="${element.power}"></td>
+            <td th:text="${element.fuelType}"></td>
+            <td th:text="${element.bodyType}"></td>
+            <td th:text="${element.transmission}"></td>
+            <td th:text="${element.numberOfSeats}"></td>
+            <td th:text="${element.pricePerDay}"></td>
+            <td th:text="${element.isAvailable}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

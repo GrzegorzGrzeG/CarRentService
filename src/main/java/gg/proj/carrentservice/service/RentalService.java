@@ -1,23 +1,23 @@
 package gg.proj.carrentservice.service;
 
 import gg.proj.carrentservice.entity.Rental;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import gg.proj.carrentservice.repository.RentalRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class RentalService {
-    private final static Log log = LogFactory.getLog(RentalService.class);
-    private final RentalService rentalService;
+    private final RentalRepository rentalRepository;
 
-    public RentalService(RentalService rentalService) {
-        this.rentalService = rentalService;
+    public RentalService(RentalRepository rentalRepository) {
+        this.rentalRepository = rentalRepository;
     }
 
-    public List<Rental> getAll() {
-        return rentalService.getAll();
-    }
+//    public List<Rental> getAll() {
+//        return rentalRepository.getAll();
+//    }
 
 }

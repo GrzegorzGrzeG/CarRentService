@@ -1,5 +1,5 @@
 package gg.proj.carrentservice.entity;
 
-enum TransmissionType {
+public enum TransmissionType {
     MANUAL, AUTOMATIC, SEMI_AUTOMATIC
 }

@@ -2,15 +2,14 @@ package gg.proj.carrentservice.service;
 
 import gg.proj.carrentservice.entity.Car;
 import gg.proj.carrentservice.repository.CarRepository;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class CarService {
-    private final static Log log = LogFactory.getLog(CarService.class);
     private final CarRepository carRepository;
 
     public CarService(CarRepository carRepository) {

@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Car List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
 </head>
 <body>
-
+<div>
+    <h1>Car List</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Registration number</th>
+            <th>Production year</th>
+            <th>Transmission type</th>
+            <th>Price per day</th>
+            <th>Is available</th>
+            <th>id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car : ${cars}">
+            <td th:text="${car.brand}"></td>
+            <td th:text="${car.model}"></td>
+            <td th:text="${car.registrationNumber}"></td>
+            <td th:text="${car.transmission}"></td>
+            <td th:text="${car.pricePerDay}"></td>
+            <td th:text="${car.productionYear}"></td>
+            <td th:text="${car.isAvailable}"></td>
+            <td th:text="${car.id}"></td>
+            <td>
+                <form th:action="@{/car/list}" method="post">
+                    <button type="submit" class="btn btn-primary btn-sm" name="carId" th:value="${car.id}">View</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

@@ -3,9 +3,11 @@ package gg.proj.carrentservice.entity;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Document(collection = "cars")
 public class Car {
     @Id
@@ -25,8 +27,8 @@ public class Car {
     private int engineCapacity;
     @Min(1)
     private int power;
-    @NotBlank(message = "Fuel type cannot be empty")
-    private String fuelType;
+    @NotNull
+    private FuelType fuelType;
     @NotNull
     private BodyType bodyType;
     @NotNull
@@ -35,5 +37,6 @@ public class Car {
     private int numberOfSeats;
     @Min(1)
     private double pricePerDay;
+    private boolean isAvailable;
 
 }
