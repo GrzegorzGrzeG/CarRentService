@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Rental</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <style>
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            max-width: 90%;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            margin-right: 10px;
+        }
+    </style>
+    <script>
+        function openPopup(button) {
+            const carId = button.getAttribute('data-car-id');
+            document.getElementById("popupCarId").value = carId;
+            document.getElementById("rentalPopup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("rentalPopup").style.display = "none";
+        }
+    </script>
+
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Car List</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Registration number</th>
+            <th>Production year</th>
+            <th>Transmission type</th>
+            <th>Price per day</th>
+            <th>Is available</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car : ${cars}">
+            <td th:text="${car.brand}"></td>
+            <td th:text="${car.model}"></td>
+            <td th:text="${car.registrationNumber}"></td>
+            <td th:text="${car.productionYear}"></td>
+            <td th:text="${car.transmission}"></td>
+            <td th:text="${car.pricePerDay}"></td>
+            <td th:text="${car.isAvailable}"></td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm" th:attr="data-car-id=${car.id}" onclick="openPopup(this)" th:value="${car.id}">Rent</button>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Popup -->
+<div id="rentalPopup" class="popup-overlay">
+    <div class="popup-content">
+        <form th:action="@{/rental/add}" method="post" th:object="${rental}">
+            <h3>Rent a Car</h3>
+            <input type="hidden" name="carId" id="popupCarId">
+            <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input type="date" class="form-control" id="startDate" th:field="*{startDate}" required>
+            </div>
+            <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input type="date" class="form-control" id="endDate" th:field="*{endDate}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-secondary" onclick="closePopup()">Cancel</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

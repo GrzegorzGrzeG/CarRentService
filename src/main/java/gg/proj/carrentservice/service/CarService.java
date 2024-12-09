@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -26,5 +27,17 @@ public class CarService {
 
     public Car getCarById(String id) {
         return carRepository.findById(id).orElse(null);
+    }
+
+    public List<Car> getCarsByAvailable(boolean available) {
+        return carRepository.getCarsByIsAvailable(available);
+    }
+
+    public void setCarAvailability(String id, boolean available) {
+        Car car = carRepository.findById(id).orElse(null);
+        if(Objects.nonNull(car)) {
+            car.setAvailable(available);
+            carRepository.save(car);
+        }
     }
 }

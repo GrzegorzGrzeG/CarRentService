@@ -37,7 +37,6 @@ public class CarController {
 
     @PostMapping("/list")
     public String processList(@RequestParam("carId") String carId) {
-        log.error("=car id={}", carId);
         return "redirect:/car/view/" + carId;
     }
 
@@ -58,8 +57,6 @@ public class CarController {
 
     @GetMapping("/view/{id}")
     public String viewCarForm(@PathVariable String id, Model model) {
-        log.error("viewCarForm");
-        log.error("=car id={}", id);
         Car car = carService.getCarById(id);
         model.addAttribute("car", car);
         return "/html/car_view";
