@@ -22,11 +22,11 @@
         </thead>
         <tbody>
         <tr th:each="rental : ${rentals}">
-            <td th:text="${rental.carId}"></td>
-            <td th:text="${rental.customerId}"></td>
+            <td th:text="${rental.brand}"></td>
+            <td th:text="${rental.model}"></td>
             <td th:text="${rental.startDate}"></td>
             <td th:text="${rental.endDate}"></td>
-            <td th:text="${rental.status}"></td>
+            <td th:text="${rental.rentalStatus}"></td>
         </tbody>
     </table>
 </div>

@@ -24,15 +24,10 @@ public class RentalController {
         this.carService = carService;
     }
 
-//    @RequestMapping("/list")
-//    public String rentalList(Model model) {
-//        model.addAttribute("rentals", rentalService.getAll());
-//        return "/html/rental_list";
-//    }
 
     @GetMapping("/list")
     public String rentalList(Model model) {
-        model.addAttribute("rentals", rentalService.getAll());
+        model.addAttribute("rentals", rentalService.prepareRentalView(rentalService.getAll()));
         return "/html/rental_list";
     }
 
@@ -42,6 +37,7 @@ public class RentalController {
         model.addAttribute("rental", new Rental());
         return "/html/add_rental";
     }
+
     @PostMapping("/add")
     public String processNewRentalForm(@ModelAttribute("rental") Rental rental) {
         log.error("rental: " + rental);

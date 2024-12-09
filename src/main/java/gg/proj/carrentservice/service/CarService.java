@@ -22,6 +22,7 @@ public class CarService {
     }
 
     public void addNewCar(Car car) {
+        car.setAvailable(true);
         carRepository.save(car);
     }
 

@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
-
+//todo zmienić LocalDate na LocalDateTime albo zaimplementować drugie pole z godziną
 @Data
 @Document(collection = "rentals")
 public class Rental {
