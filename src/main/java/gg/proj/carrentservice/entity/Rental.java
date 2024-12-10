@@ -7,8 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-//todo zmienić LocalDate na LocalDateTime albo zaimplementować drugie pole z godziną
 @Data
 @Document(collection = "rentals")
 public class Rental {
@@ -20,10 +20,10 @@ public class Rental {
     @NotNull
     private String customerId;
     @NotNull(message = "Start date cannot be empty")
-    private LocalDate startDate;
+    private LocalDateTime startDate;
     @Future(message = "End date must be in the future")
     @NotNull(message = "End date cannot be empty")
-    private LocalDate endDate;
+    private LocalDateTime endDate;
     @NotNull
     private RentalStatus status;
 

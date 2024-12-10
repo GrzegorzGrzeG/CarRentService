@@ -21,7 +21,6 @@ public class RentalService {
         this.carService = carService;
     }
 
-    //todo dodać obsługę zmiany statusów wypożyczeń
     public void addNewRental(Rental rental) {
         rental.setStatus(RentalStatus.RENTED);
         rentalRepository.save(rental);
@@ -33,7 +32,6 @@ public class RentalService {
     }
 
     public List<RentalView> prepareRentalView(List<Rental> rentals) {
-        //todo zaimplementować
         List<RentalView> toReturn = new ArrayList<>();
         for(Rental rental : rentals) {
             RentalView rentalView = new RentalView();

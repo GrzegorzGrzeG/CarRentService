@@ -55,18 +55,26 @@ public class CarController {
         return "/html/index";
     }
 
-    @GetMapping("/view/{id}")
-    public String viewCarForm(@PathVariable String id, Model model) {
-        Car car = carService.getCarById(id);
-        model.addAttribute("car", car);
-        return "/html/car_view";
+    @GetMapping("/details/{id}")
+    @ResponseBody
+    public Car getCarDetails(@PathVariable String id) {
+        return carService.getCarById(id);
     }
-//todo cos z tym zrobić
-    @PostMapping("/view/{id}")
-    public String processViewCarForm(@RequestParam(name = "carId") String carId, Car car) {
-        //carService.addNewCar(car);
-        return "/html/index";
-    }
+
+
+//    @GetMapping("/view/{id}")
+//    public String viewCarForm(@PathVariable String id, Model model) {
+//        Car car = carService.getCarById(id);
+//        model.addAttribute("car", car);
+//        return "/html/car_view";
+//    }
+//
+////todo cos z tym zrobić
+//    @PostMapping("/view/{id}")
+//    public String processViewCarForm(@RequestParam(name = "carId") String carId, Car car) {
+//        //carService.addNewCar(car);
+//        return "/html/index";
+//    }
 
 
 }

@@ -94,11 +94,11 @@
             <input type="hidden" name="carId" id="popupCarId">
             <div class="form-group">
                 <label for="startDate">Start Date</label>
-                <input type="date" class="form-control" id="startDate" th:field="*{startDate}" required>
+                <input type="datetime-local" class="form-control" id="startDate" th:field="*{startDate}" required>
             </div>
             <div class="form-group">
                 <label for="endDate">End Date</label>
-                <input type="date" class="form-control" id="endDate" th:field="*{endDate}" required>
+                <input type="datetime-local" class="form-control" id="endDate" th:field="*{endDate}" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-secondary" onclick="closePopup()">Cancel</button>

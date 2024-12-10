@@ -6,6 +6,65 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+    <script>
+        function showCarDetailsFromData(button) {
+            const carId = button.getAttribute('data-car-id');
+            showCarDetails(carId);
+        }
+
+        function showCarDetails(carId) {
+            fetch(`/car/details/${carId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("popupBrand").textContent = data.brand;
+                    document.getElementById("popupModel").textContent = data.model;
+                    document.getElementById("popupColor").textContent = data.color;
+                    document.getElementById("popupRegistrationNumber").textContent = data.registrationNumber;
+                    document.getElementById("popupVIN").textContent = data.vin;
+                    document.getElementById("popupProductionYear").textContent = data.productionYear;
+                    document.getElementById("popupEngineCapacity").textContent = data.engineCapacity;
+                    document.getElementById("popupPower").textContent = data.power;
+                    document.getElementById("popupFuelType").textContent = data.fuelType;
+                    document.getElementById("popupBodyType").textContent = data.bodyType;
+                    document.getElementById("popupTransmission").textContent = data.transmission;
+                    document.getElementById("popupNumberOfSeats").textContent = data.numberOfSeats;
+                    document.getElementById("popupPricePerDay").textContent = data.pricePerDay;
+                    document.getElementById("popupIsAvailable").textContent = data.isAvailable ? "Yes" : "No";
+                    document.getElementById("carDetails").style.display = "block";
+                })
+                .catch(error => console.error('Error fetching car details:', error));
+        }
+
+        function closePopup() {
+            document.getElementById("carDetails").style.display = "none";
+        }
+    </script>
+    <style>
+        .popup-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid black;
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-overlay table {
+            width: 100%;
+        }
+
+        .popup-overlay th {
+            text-align: left;
+        }
+
+        .popup-overlay button {
+            margin-top: 10px;
+        }
+    </style>
+
 </head>
 <body>
 <div>
@@ -34,13 +93,37 @@
             <td th:text="${car.isAvailable}"></td>
             <td th:text="${car.id}"></td>
             <td>
-                <form th:action="@{/car/list}" method="post">
-                    <button type="submit" class="btn btn-primary btn-sm" name="carId" th:value="${car.id}">View</button>
-                </form>
+                <button type="button" class="btn btn-primary btn-sm"
+                        th:attr="data-car-id=${car.id}"
+                        th:value="${car.id}"
+                        onclick="showCarDetailsFromData(this)">View</button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+
+<div id="carDetails" class="popup-overlay" style="display:none;">
+    <h1>Car details</h1>
+    <table>
+        <tr><th>Brand</th><td id="popupBrand"></td></tr>
+        <tr><th>Model</th><td id="popupModel"></td></tr>
+        <tr><th>Color</th><td id="popupColor"></td></tr>
+        <tr><th>Registration Number</th><td id="popupRegistrationNumber"></td></tr>
+        <tr><th>VIN</th><td id="popupVIN"></td></tr>
+        <tr><th>Production Year</th><td id="popupProductionYear"></td></tr>
+        <tr><th>Engine Capacity</th><td id="popupEngineCapacity"></td></tr>
+        <tr><th>Power</th><td id="popupPower"></td></tr>
+        <tr><th>Fuel Type</th><td id="popupFuelType"></td></tr>
+        <tr><th>Body Type</th><td id="popupBodyType"></td></tr>
+        <tr><th>Transmission Type</th><td id="popupTransmission"></td></tr>
+        <tr><th>Number of Seats</th><td id="popupNumberOfSeats"></td></tr>
+        <tr><th>Price Per Day</th><td id="popupPricePerDay"></td></tr>
+        <tr><th>Is Available</th><td id="popupIsAvailable"></td></tr>
+    </table>
+    <button onclick="closePopup()">Close</button>
+</div>
+
 </body>
 </html>

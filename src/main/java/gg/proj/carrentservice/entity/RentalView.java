@@ -3,14 +3,15 @@ package gg.proj.carrentservice.entity;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class RentalView {
     private String rentalId;
     private String carId;
     private String customerId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String brand;
     private String model;
     private String registrationNumber;
