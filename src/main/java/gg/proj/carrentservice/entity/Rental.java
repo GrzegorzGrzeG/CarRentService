@@ -26,6 +26,8 @@ public class Rental {
     private LocalDateTime endDate;
     @NotNull
     private RentalStatus status;
+    //todo zaimplementować to
+    private double price;
 
 
 }
