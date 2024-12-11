@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -33,7 +34,7 @@ public class RentalService {
 
     public List<RentalView> prepareRentalView(List<Rental> rentals) {
         List<RentalView> toReturn = new ArrayList<>();
-        for(Rental rental : rentals) {
+        for (Rental rental : rentals) {
             RentalView rentalView = new RentalView();
             rentalView.setRentalId(rental.getId());
             rentalView.setCarId(rental.getCarId());
@@ -55,5 +56,21 @@ public class RentalService {
 
         return toReturn;
     }
+
+    public void returnRental(String rentalId) {
+        Rental rental = rentalRepository.findById(rentalId).orElseThrow();
+        if (Objects.nonNull(rental)) {
+            rental.setStatus(RentalStatus.RETURNED);
+            rentalRepository.save(rental);
+            carService.setCarAvailability(rental.getCarId(), true);
+        }
+    }
+
+    public List<RentalView> getRentalsByCustomerId(String customerId) {
+        List<Rental> rentals = rentalRepository.findAllByCustomerId(customerId);
+        return prepareRentalView(rentals);
+    }
+
+
 
 }

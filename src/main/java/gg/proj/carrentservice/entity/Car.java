@@ -7,6 +7,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 @Data
 @Document(collection = "cars")
 public class Car {
@@ -38,5 +40,10 @@ public class Car {
     @Min(1)
     private double pricePerDay;
     private boolean isAvailable;
+    private CarCondition condition;
+    //todo zaimplementować to
+    private LocalDate lastTechnicalReview;
+    private LocalDate nextTechnicalReview;
+    private LocalDate insuranceValidTo;
 
 }
