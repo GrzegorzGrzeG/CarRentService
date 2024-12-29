@@ -28,6 +28,7 @@ public class Rental {
     private RentalStatus status;
     //todo zaimplementować to
     private double price;
+    private RentalCondition rentalCondition;
 
 
 }

@@ -71,6 +71,4 @@ public class RentalService {
         return prepareRentalView(rentals);
     }
 
-
-
 }

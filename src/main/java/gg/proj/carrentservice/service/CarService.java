@@ -12,9 +12,11 @@ import java.util.Objects;
 @Service
 public class CarService {
     private final CarRepository carRepository;
+    private final RentalService rentalService;
 
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, RentalService rentalService) {
         this.carRepository = carRepository;
+        this.rentalService = rentalService;
     }
 
     public List<Car> getAll() {
@@ -41,4 +43,32 @@ public class CarService {
             carRepository.save(car);
         }
     }
+
+    public void deleteCar(String id) {
+        carRepository.deleteById(id);
+    }
+
+    public Car getMostExpensiveCar() {
+        List<Car> cars = carRepository.findAll();
+        Car mostExpensiveCar = cars.get(0);
+        for (Car car : cars) {
+            if (car.getPricePerDay() > mostExpensiveCar.getPricePerDay()) {
+                mostExpensiveCar = car;
+            }
+        }
+        return mostExpensiveCar;
+    }
+
+    public Car getMostOftenRentedCar() {
+        List<Car> cars = carRepository.findAll();
+        Car mostOftenRentedCar = cars.get(0);
+        for (Car car : cars) {
+            if (rentalService.getAll().stream().filter(rental -> rental.getCarId().equals(car.getId())).count() >
+                    rentalService.getAll().stream().filter(rental -> rental.getCarId().equals(mostOftenRentedCar.getId())).count()) {
+                mostOftenRentedCar = car;
+            }
+        }
+        return mostOftenRentedCar;
+    }
+
 }
