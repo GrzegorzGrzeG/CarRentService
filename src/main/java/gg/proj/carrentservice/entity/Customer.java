@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 @Document(collection = "customers")
@@ -27,15 +28,15 @@ public class Customer {
     private String drivingLicenseNumber;
     @Past
     @NotNull(message = "Driving license issue date cannot be empty")
-    private Date drivingLicenseIssueDate;
+    private LocalDate drivingLicenseIssueDate;
     @Future
     @NotNull(message = "Driving license expiration date cannot be empty")
-    private Date drivingLicenseExpirationDate;
+    private LocalDate drivingLicenseExpirationDate;
     @Pattern(regexp = "^[0-9]{11}$", message = "PESEL must have 11 digits")
     private String pesel;
     @NotBlank(message = "ID number cannot be empty")
     private String idNumber;
     @Past
     @NotNull(message = "Date of birth cannot be empty")
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 }

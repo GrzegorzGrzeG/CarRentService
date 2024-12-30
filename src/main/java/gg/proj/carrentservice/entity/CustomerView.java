@@ -2,6 +2,7 @@ package gg.proj.carrentservice.entity;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -18,10 +19,10 @@ public class CustomerView {
     private String city;
     private String country;
     private String drivingLicenseNumber;
-    private Date drivingLicenseIssueDate;
-    private Date drivingLicenseExpirationDate;
+    private LocalDate drivingLicenseIssueDate;
+    private LocalDate drivingLicenseExpirationDate;
     private String pesel;
     private String idNumber;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
 }

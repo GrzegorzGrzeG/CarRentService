@@ -49,8 +49,14 @@ public class RentalController {
 
     @PostMapping("/return")
     public String processReturnRentalForm(@RequestParam("rentalId") String rentalId) {
-        log.error("=rentalId=" + rentalId);
         rentalService.returnRental(rentalId);
         return "redirect:/rental/list";
     }
+
+
+    //todo zrobić archiwalne wynajmy
+//    @PostMapping("/archive")
+//    public String archiveRentals(Model model) {
+//        model.addAttribute("rentals", rentalService.prepareRentalView(rentalService.getRentalsByAvailability(RentalStatus.RENTED)));
+//    }
 }

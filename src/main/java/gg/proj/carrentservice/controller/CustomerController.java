@@ -1,7 +1,7 @@
 package gg.proj.carrentservice.controller;
 
+import gg.proj.carrentservice.entity.Customer;
 import gg.proj.carrentservice.entity.CustomerView;
-import gg.proj.carrentservice.repository.CustomerRepository;
 import gg.proj.carrentservice.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class CustomerController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("customers", customerService.getAllCustomers());
+        model.addAttribute("customers", customerService.getAllCustomerViews(customerService.getAllCustomers()));
         return "/html/customer_list";
     }
 
@@ -37,6 +37,18 @@ public class CustomerController {
     @ResponseBody
     public CustomerView getCustomerDetails(@PathVariable String id) {
         return customerService.getCustomerView(customerService.getCustomerById(id));
+    }
+
+    @GetMapping("/add")
+    public String addCustomerForm(Model model) {
+        model.addAttribute("newCustomer", new Customer());
+        return "/html/add_customer";
+    }
+
+    @PostMapping("/add")
+    public String addCustomer(@ModelAttribute("newCustomer") Customer customer) {
+        customerService.saveCustomer(customer);
+        return "redirect:/customer/list";
     }
 
 }

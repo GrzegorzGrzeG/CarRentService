@@ -16,6 +16,7 @@
             fetch(`/customer/details/${customerId}`)
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     document.getElementById("popupFirstName").textContent = data.firstName;
                     document.getElementById("popupLastName").textContent = data.lastName;
                     document.getElementById("popupPesel").textContent = data.pesel;
@@ -30,7 +31,7 @@
                     document.getElementById("popupDrivingLicenseNumber").textContent = data.drivingLicenseNumber;
                     document.getElementById("popupDrivingLicenceIssueDate").textContent = data.drivingLicenseIssueDate;
                     document.getElementById("popupDrivingLicenseExpirationDate").textContent = data.drivingLicenseExpirationDate;
-
+                    document.getElementById("customerDetails").style.display = "block";
                 })
                 .catch(error => console.log('Error fetching customer details: ', error));
         }
@@ -71,7 +72,11 @@
     <table>
         <thead>
         <tr>
-            <th></th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Address</th>
         </tr>
         </thead>
         <tbody>
@@ -83,9 +88,9 @@
             <td th:text="${customer.address}"></td>
             <td>
                 <button type="button" class="btn btn-primary btn-sm"
-                        th:attr="data-customer-id=${customer.id}"
-                        th:value="${customer.id}"
-                onclick="showCustomerDetailsFromData(this)">View</button>
+                        th:attr="data-customer-id=${customer.customerId}"
+                        th:value="${customer.customerId}"
+                        onclick="showCustomerDetailsFromData(this)">View</button>
             </td>
         </tr>
         </tbody>
