@@ -19,7 +19,7 @@
             <th>End date</th>
             <th>Rental Status</th>
             <th>Duration</th>
-            <td>Price</td>
+            <th>Price</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +31,11 @@
             <td th:text="${rental.rentalStatus}"></td>
             <td th:text="${rental.duration}"></td>
             <td th:text="${rental.price}"></td>
+            <td>
+                <form action="#" th:action="@{/rental/return}" method="post">
+                    <button type="submit" name="rentalId" th:value="${rental.rentalId}">Return</button>
+                </form>
+            </td>
         </tbody>
     </table>
 </div>

@@ -1,6 +1,7 @@
 package gg.proj.carrentservice.controller;
 
 import gg.proj.carrentservice.entity.Rental;
+import gg.proj.carrentservice.entity.RentalStatus;
 import gg.proj.carrentservice.service.CarService;
 import gg.proj.carrentservice.service.RentalService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class RentalController {
 
     @GetMapping("/list")
     public String rentalList(Model model) {
-        model.addAttribute("rentals", rentalService.prepareRentalView(rentalService.getAll()));
+        model.addAttribute("rentals", rentalService.prepareRentalView(rentalService.getRentalsByAvailability(RentalStatus.RENTED)));
         return "/html/rental_list";
     }
 
@@ -45,13 +46,11 @@ public class RentalController {
         return "redirect:/rental/list";
     }
 
-    @GetMapping("/return")
-    public String showRentalreturnForm(Model model) {
 
-    }
-
-    @PostMapping
-    public String processReturnRentalForm(@ModelAttribute("rental") Rental rental) {
-
+    @PostMapping("/return")
+    public String processReturnRentalForm(@RequestParam("rentalId") String rentalId) {
+        log.error("=rentalId=" + rentalId);
+        rentalService.returnRental(rentalId);
+        return "redirect:/rental/list";
     }
 }

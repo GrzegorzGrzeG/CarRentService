@@ -96,4 +96,8 @@ public class RentalService {
         return String.format("%d Days, %d Hours, %d Minutes", days, hours, minutes);
     }
 
+    public List<Rental> getRentalsByAvailability(RentalStatus status) {
+        return rentalRepository.findAllByStatus(status);
+    }
+
 }
