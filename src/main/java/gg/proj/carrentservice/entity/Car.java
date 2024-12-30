@@ -45,5 +45,6 @@ public class Car {
     private LocalDate lastTechnicalReview;
     private LocalDate nextTechnicalReview;
     private LocalDate insuranceValidTo;
+    //todo zaimplementować car view
 
 }
