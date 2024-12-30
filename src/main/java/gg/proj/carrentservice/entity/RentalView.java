@@ -22,4 +22,6 @@ public class RentalView {
     private TransmissionType transmission;
     private double pricePerDay;
     private RentalStatus rentalStatus;
+    private double price;
+    private String duration;
 }

@@ -7,6 +7,8 @@ import gg.proj.carrentservice.repository.RentalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +25,20 @@ public class RentalService {
     }
 
     public void addNewRental(Rental rental) {
+        Duration duration = Duration.between(rental.getStartDate(), rental.getEndDate());
+        rental.setDuration(duration);
+
+        long days = duration.toDays();
+        long hours = duration.minusDays(days).toHours();
+        long minutes = duration.minusDays(days).minusHours(hours).toMinutes();
+
+        long fullDays = ChronoUnit.DAYS.between(rental.getStartDate(), rental.getEndDate());
+
+        if (rental.getStartDate().plusDays(fullDays).isBefore(rental.getEndDate())) {
+            fullDays += 1;
+        }
+        rental.setPrice(fullDays * carService.getCarById(rental.getCarId()).getPricePerDay());
+
         rental.setStatus(RentalStatus.RENTED);
         rentalRepository.save(rental);
         carService.setCarAvailability(rental.getCarId(), false);
@@ -51,6 +67,8 @@ public class RentalService {
             rentalView.setTransmission(carService.getCarById(rental.getCarId()).getTransmission());
             rentalView.setPricePerDay(carService.getCarById(rental.getCarId()).getPricePerDay());
             rentalView.setRentalStatus(rental.getStatus());
+            rentalView.setPrice(rental.getPrice());
+            rentalView.setDuration(durationFormat(rental.getDuration()));
             toReturn.add(rentalView);
         }
 
@@ -69,6 +87,13 @@ public class RentalService {
     public List<RentalView> getRentalsByCustomerId(String customerId) {
         List<Rental> rentals = rentalRepository.findAllByCustomerId(customerId);
         return prepareRentalView(rentals);
+    }
+
+    private String durationFormat(Duration duration) {
+        long days = duration.toDays();
+        long hours = duration.minusDays(days).toHours();
+        long minutes = duration.minusDays(days).minusHours(hours).toMinutes();
+        return String.format("%d Days, %d Hours, %d Minutes", days, hours, minutes);
     }
 
 }

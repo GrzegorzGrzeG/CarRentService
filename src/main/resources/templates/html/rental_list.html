@@ -18,6 +18,8 @@
             <th>Start date</th>
             <th>End date</th>
             <th>Rental Status</th>
+            <th>Duration</th>
+            <td>Price</td>
         </tr>
         </thead>
         <tbody>
@@ -27,6 +29,8 @@
             <td th:text="${rental.startDate}"></td>
             <td th:text="${rental.endDate}"></td>
             <td th:text="${rental.rentalStatus}"></td>
+            <td th:text="${rental.duration}"></td>
+            <td th:text="${rental.price}"></td>
         </tbody>
     </table>
 </div>
