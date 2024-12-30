@@ -40,11 +40,9 @@ public class Car {
     @Min(1)
     private double pricePerDay;
     private boolean isAvailable;
-    private CarCondition condition;
     //todo zaimplementować to
     private LocalDate lastTechnicalReview;
     private LocalDate nextTechnicalReview;
     private LocalDate insuranceValidTo;
-    //todo zaimplementować car view
 
 }

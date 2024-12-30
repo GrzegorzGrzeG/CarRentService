@@ -30,9 +30,6 @@ public class Rental {
     private double price;
     private Duration duration;
 
-    //todo zaimplementować to
-    private RentalCondition rentalCondition;
-
 
 
 }

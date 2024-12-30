@@ -1,11 +1,13 @@
 package gg.proj.carrentservice.service;
 
 import gg.proj.carrentservice.entity.Car;
+import gg.proj.carrentservice.entity.CarView;
 import gg.proj.carrentservice.repository.CarRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,7 +41,7 @@ public class CarService {
 
     public void setCarAvailability(String id, boolean available) {
         Car car = carRepository.findById(id).orElse(null);
-        if(Objects.nonNull(car)) {
+        if (Objects.nonNull(car)) {
             car.setAvailable(available);
             carRepository.save(car);
         }
@@ -71,5 +73,56 @@ public class CarService {
 //        }
 //        return mostOftenRentedCar;
 //    }
+
+    public CarView getCarView(Car car) {
+        CarView carView = new CarView();
+        carView.setId(car.getId());
+        carView.setBrand(car.getBrand());
+        carView.setModel(car.getModel());
+        carView.setColor(car.getColor());
+        carView.setRegistrationNumber(car.getRegistrationNumber());
+        carView.setVin(car.getVin());
+        carView.setProductionYear(car.getProductionYear());
+        carView.setEngineCapacity(car.getEngineCapacity());
+        carView.setPower(car.getPower());
+        carView.setFuelType(car.getFuelType());
+        carView.setBodyType(car.getBodyType());
+        carView.setTransmission(car.getTransmission());
+        carView.setNumberOfSeats(car.getNumberOfSeats());
+        carView.setPricePerDay(car.getPricePerDay());
+        carView.setAvailable(car.isAvailable());
+        carView.setLastTechnicalReview(car.getLastTechnicalReview());
+        carView.setNextTechnicalReview(car.getNextTechnicalReview());
+        carView.setInsuranceValidTo(car.getInsuranceValidTo());
+
+        return carView;
+    }
+
+    public List<CarView> getAllCarViews(List<Car> cars) {
+        List<CarView> carViews = new ArrayList<>();
+        for(Car car : cars) {
+            CarView carView = new CarView();
+            carView.setId(car.getId());
+            carView.setBrand(car.getBrand());
+            carView.setModel(car.getModel());
+            carView.setColor(car.getColor());
+            carView.setRegistrationNumber(car.getRegistrationNumber());
+            carView.setVin(car.getVin());
+            carView.setProductionYear(car.getProductionYear());
+            carView.setEngineCapacity(car.getEngineCapacity());
+            carView.setPower(car.getPower());
+            carView.setFuelType(car.getFuelType());
+            carView.setBodyType(car.getBodyType());
+            carView.setTransmission(car.getTransmission());
+            carView.setNumberOfSeats(car.getNumberOfSeats());
+            carView.setPricePerDay(car.getPricePerDay());
+            carView.setAvailable(car.isAvailable());
+            carView.setLastTechnicalReview(car.getLastTechnicalReview());
+            carView.setNextTechnicalReview(car.getNextTechnicalReview());
+            carView.setInsuranceValidTo(car.getInsuranceValidTo());
+            carViews.add(carView);
+        }
+        return carViews;
+    }
 
 }

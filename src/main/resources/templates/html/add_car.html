@@ -50,12 +50,20 @@
                 <option th:each="trans : ${transmission}" th:value="${trans}" th:text="${trans}"></option>
             </select>
 
-
             <label for="numberOfSeats">Number Of Seats:</label>
             <input type="number" class="form-control" id="numberOfSeats" th:field="*{numberOfSeats}" />
 
             <label for="pricePerDay">Price Per Day:</label>
             <input type="number" class="form-control" id="pricePerDay" th:field="*{pricePerDay}" />
+
+            <label for="lastTechnicalReview">Last technical review:</label>
+            <input type="date" class="form-control" id="lastTechnicalReview" th:field="*{lastTechnicalReview}" />
+
+            <label for="nextTechnicalReview">Next technical review:</label>
+            <input type="date" class="form-control" id="nextTechnicalReview" th:field="*{nextTechnicalReview}" />
+
+            <label for="insuranceValidTo">Insurance valid to:</label>
+            <input type="date" class="form-control" id="insuranceValidTo" th:field="*{insuranceValidTo}" />
 
         </div>
         <button type="submit" class="btn btn-primary">Add new car</button>

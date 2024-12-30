@@ -1,9 +1,6 @@
 package gg.proj.carrentservice.controller;
 
-import gg.proj.carrentservice.entity.BodyType;
-import gg.proj.carrentservice.entity.Car;
-import gg.proj.carrentservice.entity.FuelType;
-import gg.proj.carrentservice.entity.TransmissionType;
+import gg.proj.carrentservice.entity.*;
 import gg.proj.carrentservice.service.CarService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +28,7 @@ public class CarController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("cars", carService.getAll());
+        model.addAttribute("cars", carService.getAllCarViews(carService.getAll()));
         return "/html/car_list";
     }
 
@@ -57,10 +54,24 @@ public class CarController {
 
     @GetMapping("/details/{id}")
     @ResponseBody
-    public Car getCarDetails(@PathVariable String id) {
-        return carService.getCarById(id);
+    public CarView getCarDetails(@PathVariable String id) {
+        return carService.getCarView(carService.getCarById(id));
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteCar(@PathVariable String id) {
+        carService.deleteCar(id);
+        return "redirect:/car/list";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editCarForm(@PathVariable String id, Model model) {
+        model.addAttribute("car", carService.getCarById(id));
+        model.addAttribute("fuelTypes", FuelType.values());
+        model.addAttribute("bodyType", BodyType.values());
+        model.addAttribute("transmission", TransmissionType.values());
+        return "/html/edit_car";
+    }
 
 
 
