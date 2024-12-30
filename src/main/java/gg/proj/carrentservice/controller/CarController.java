@@ -52,12 +52,6 @@ public class CarController {
         return "/html/index";
     }
 
-    @GetMapping("/details/{id}")
-    @ResponseBody
-    public CarView getCarDetails(@PathVariable String id) {
-        return carService.getCarView(carService.getCarById(id));
-    }
-
     @GetMapping("/delete/{id}")
     public String deleteCar(@PathVariable String id) {
         carService.deleteCar(id);

@@ -75,5 +75,9 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    public void deleteCustomer(String id) {
+        customerRepository.deleteById(id);
+    }
+
 
 }

@@ -6,6 +6,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+    <script>
+        function deleteRental(button) {
+            const rentalId = button.getAttribute('data-rental-id');
+            if (confirm("Are you sure you want to delete this car?")) {
+                fetch(`/rental/delete/${rentalId}`, {
+                    method: 'GET'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Rental deleted successfully.");
+                            location.reload();
+                        } else {
+                            alert("Failed to delete the rental.");
+                        }
+                    })
+                    .catch(error => console.error('Error deleting rental:', error));
+            }
+        }
+    </script>
 </head>
 <body>
 <div>
@@ -35,6 +54,12 @@
                 <form action="#" th:action="@{/rental/return}" method="post">
                     <button type="submit" name="rentalId" th:value="${rental.rentalId}">Return</button>
                 </form>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger btn-sm"
+                        th:attr="data-rental-id=${rental.rentalId}"
+                        th:value="${rental.rentalId}"
+                        onclick="deleteRental(this)">Delete</button>
             </td>
         </tbody>
     </table>

@@ -51,4 +51,10 @@ public class CustomerController {
         return "redirect:/customer/list";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteCustomer(@PathVariable String id) {
+        customerService.deleteCustomer(id);
+        return "redirect:/customer/list";
+    }
+
 }

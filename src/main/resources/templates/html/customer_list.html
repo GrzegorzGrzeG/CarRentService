@@ -39,6 +39,24 @@
         function closePopup() {
             document.getElementById("customerDetails").style.display = "none";
         }
+
+        function deleteCustomer(button) {
+            const customerId = button.getAttribute('data-customer-id');
+            if (confirm("Are you sure you want to delete this car?")) {
+                fetch(`/customer/delete/${customerId}`, {
+                    method: 'GET'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Customer deleted successfully.");
+                            location.reload();
+                        } else {
+                            alert("Failed to delete the customer.");
+                        }
+                    })
+                    .catch(error => console.error('Error deleting customer:', error));
+            }
+        }
     </script>
     <style>
         .popup-overlay {
@@ -91,6 +109,10 @@
                         th:attr="data-customer-id=${customer.customerId}"
                         th:value="${customer.customerId}"
                         onclick="showCustomerDetailsFromData(this)">View</button>
+                <button type="button" class="btn btn-danger btn-sm"
+                        th:attr="data-customer-id=${customer.customerId}"
+                        th:value="${customer.customerId}"
+                        onclick="deleteCustomer(this)">Delete</button>
             </td>
         </tr>
         </tbody>

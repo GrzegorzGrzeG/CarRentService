@@ -100,4 +100,8 @@ public class RentalService {
         return rentalRepository.findAllByStatus(status);
     }
 
+    public void deleteRental(String id) {
+        rentalRepository.deleteById(id);
+    }
+
 }

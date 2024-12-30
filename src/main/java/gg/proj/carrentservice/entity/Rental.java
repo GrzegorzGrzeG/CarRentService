@@ -7,13 +7,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @Document(collection = "rentals")
 public class Rental {
-
     @Id
     private String id;
     @NotNull
@@ -29,7 +27,5 @@ public class Rental {
     private RentalStatus status;
     private double price;
     private Duration duration;
-
-
 
 }

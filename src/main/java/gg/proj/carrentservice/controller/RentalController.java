@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @Slf4j
 @Controller
 @RequestMapping("/rental")
@@ -24,7 +22,6 @@ public class RentalController {
         this.rentalService = rentalService;
         this.carService = carService;
     }
-
 
     @GetMapping("/list")
     public String rentalList(Model model) {
@@ -46,10 +43,15 @@ public class RentalController {
         return "redirect:/rental/list";
     }
 
-
     @PostMapping("/return")
     public String processReturnRentalForm(@RequestParam("rentalId") String rentalId) {
         rentalService.returnRental(rentalId);
+        return "redirect:/rental/list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteRental(@PathVariable String id) {
+        rentalService.deleteRental(id);
         return "redirect:/rental/list";
     }
 
