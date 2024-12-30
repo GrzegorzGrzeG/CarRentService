@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script>
+        function showCustomerDetailsFromData(button) {
+            const customerId = button.getAttribute('data-customer-id');
+            showCustomerDetails(customerId);
+        }
+
+        function showCustomerDetails(customerId) {
+            fetch(`/customer/details/${customerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("popupFirstName").textContent = data.firstName;
+                    document.getElementById("popupLastName").textContent = data.lastName;
+                    document.getElementById("popupPesel").textContent = data.pesel;
+                    document.getElementById("popupIdNumber").textContent = data.idNumber;
+                    document.getElementById("popupDateOfBirth").textContent = data.dateOfBirth;
+                    document.getElementById("popupEmail").textContent = data.email;
+                    document.getElementById("popupPhoneNumber").textContent = data.phoneNumber;
+                    document.getElementById("popupAddress").textContent = data.address;
+                    document.getElementById("popupZipCode").textContent = data.zipCode;
+                    document.getElementById("popupCity").textContent = data.city;
+                    document.getElementById("popupCountry").textContent = data.country;
+                    document.getElementById("popupDrivingLicenseNumber").textContent = data.drivingLicenseNumber;
+                    document.getElementById("popupDrivingLicenceIssueDate").textContent = data.drivingLicenseIssueDate;
+                    document.getElementById("popupDrivingLicenseExpirationDate").textContent = data.drivingLicenseExpirationDate;
+
+                })
+                .catch(error => console.log('Error fetching customer details: ', error));
+        }
+
+        function closePopup() {
+            document.getElementById("customerDetails").style.display = "none";
+        }
+    </script>
+    <style>
+        .popup-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid black;
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-overlay table {
+            width: 100%;
+        }
+
+        .popup-overlay th {
+            text-align: left;
+        }
+
+        .popup-overlay button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Customer list</h1>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.firstName}"></td>
+            <td th:text="${customer.lastName}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.phoneNumber}"></td>
+            <td th:text="${customer.address}"></td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm"
+                        th:attr="data-customer-id=${customer.id}"
+                        th:value="${customer.id}"
+                onclick="showCustomerDetailsFromData(this)">View</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="customerDetails" class="popup-overlay" style="display:none;">
+    <h1>Customer details</h1>
+    <table>
+        <tr><th>Firstname</th><td id="popupFirstName"></td></tr>
+        <tr><th>Lastname</th><td id="popupLastName"></td></tr>
+        <tr><th>Pesel</th><td id="popupPesel"></td></tr>
+        <tr><th>Id number</th><td id="popupIdNumber"></td></tr>
+        <tr><th>Date of birth</th><td id="popupDateOfBirth"></td></tr>
+        <tr><th>Email</th><td id="popupEmail"></td></tr>
+        <tr><th>Phone number</th><td id="popupPhoneNumber"></td></tr>
+        <tr><th>Address</th><td id="popupAddress"></td></tr>
+        <tr><th>Zip code</th><td id="popupZipCode"></td></tr>
+        <tr><th>City</th><td id="popupCity"></td></tr>
+        <tr><th>Country</th><td id="popupCountry"></td></tr>
+        <tr><th>Driving license number</th><td id="popupDrivingLicenseNumber"></td></tr>
+        <tr><th>Driving licence issue date</th><td id="popupDrivingLicenceIssueDate"></td></tr>
+        <tr><th>Driving licence expiration date</th><td id="popupDrivingLicenseExpirationDate"></td></tr>
+    </table>
+    <button onclick="closePopup()">Close</button>
+</div>
+
+</body>
+</html>

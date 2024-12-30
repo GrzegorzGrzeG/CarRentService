@@ -44,4 +44,14 @@ public class RentalController {
         rentalService.addNewRental(rental);
         return "redirect:/rental/list";
     }
+
+    @GetMapping("/return")
+    public String showRentalreturnForm(Model model) {
+
+    }
+
+    @PostMapping
+    public String processReturnRentalForm(@ModelAttribute("rental") Rental rental) {
+
+    }
 }

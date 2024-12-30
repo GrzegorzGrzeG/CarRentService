@@ -75,11 +75,10 @@
             <th>Brand</th>
             <th>Model</th>
             <th>Registration number</th>
-            <th>Production year</th>
             <th>Transmission type</th>
             <th>Price per day</th>
+            <th>Production year</th>
             <th>Is available</th>
-            <th>id</th>
         </tr>
         </thead>
         <tbody>
@@ -91,7 +90,6 @@
             <td th:text="${car.pricePerDay}"></td>
             <td th:text="${car.productionYear}"></td>
             <td th:text="${car.isAvailable}"></td>
-            <td th:text="${car.id}"></td>
             <td>
                 <button type="button" class="btn btn-primary btn-sm"
                         th:attr="data-car-id=${car.id}"

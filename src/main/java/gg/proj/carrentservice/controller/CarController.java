@@ -37,7 +37,7 @@ public class CarController {
 
     @PostMapping("/list")
     public String processList(@RequestParam("carId") String carId) {
-        return "redirect:/car/view/" + carId;
+        return "redirect:/car/details/" + carId;
     }
 
     @GetMapping("/add")
