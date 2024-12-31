@@ -36,7 +36,7 @@ public class RentalController {
 
     @GetMapping("/add")
     public String newRentalForm(Model model) {
-        model.addAttribute("cars", carService.getCarsByAvailable(true));
+        model.addAttribute("cars",carService.getAllCarViews(carService.getCarsByAvailable(true)));
         model.addAttribute("rental", new Rental());
         return "/html/add_rental";
     }
@@ -49,7 +49,7 @@ public class RentalController {
             // Błąd (np. kolizja terminów)
             model.addAttribute("errorMessage", ex.getMessage());
             // Ponownie załaduj listę dostępnych samochodów, jeśli to potrzebne
-            model.addAttribute("cars", carService.getCarsByAvailable(true));
+            model.addAttribute("cars", carService.getAllCarViews(carService.getCarsByAvailable(true)));
             return "/html/add_rental";
         }
         return "redirect:/rental/list";

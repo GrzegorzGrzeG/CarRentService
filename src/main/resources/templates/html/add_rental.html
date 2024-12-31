@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Car Rental</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
     <style>
@@ -17,7 +18,6 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
         }
-
         .popup-content {
             position: absolute;
             top: 50%;
@@ -30,11 +30,9 @@
             width: 400px;
             max-width: 90%;
         }
-
         .form-group {
             margin-bottom: 15px;
         }
-
         .btn {
             margin-right: 10px;
         }
@@ -50,11 +48,17 @@
             document.getElementById("rentalPopup").style.display = "none";
         }
     </script>
-
 </head>
 <body>
+
 <div class="container mt-5">
     <h1>Car List</h1>
+
+    <!-- Komunikat błędu (jeśli wystąpi) -->
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -78,9 +82,13 @@
             <td th:text="${car.pricePerDay}"></td>
             <td th:text="${car.isAvailable}"></td>
             <td>
-                <button type="button" class="btn btn-primary btn-sm" th:attr="data-car-id=${car.id}" onclick="openPopup(this)" th:value="${car.id}">Rent</button>
+                <button type="button" class="btn btn-primary btn-sm"
+                        th:attr="data-car-id=${car.id}"
+                        onclick="openPopup(this)"
+                        th:value="${car.id}">
+                    Rent
+                </button>
             </td>
-
         </tr>
         </tbody>
     </table>
@@ -91,19 +99,25 @@
     <div class="popup-content">
         <form th:action="@{/rental/add}" method="post" th:object="${rental}">
             <h3>Rent a Car</h3>
-            <input type="hidden" name="carId" id="popupCarId">
+            <input type="hidden" name="carId" id="popupCarId" th:field="*{carId}">
+
             <div class="form-group">
                 <label for="startDate">Start Date</label>
-                <input type="datetime-local" class="form-control" id="startDate" th:field="*{startDate}" required>
+                <input type="datetime-local" class="form-control" id="startDate"
+                       th:field="*{startDate}" required>
             </div>
+
             <div class="form-group">
                 <label for="endDate">End Date</label>
-                <input type="datetime-local" class="form-control" id="endDate" th:field="*{endDate}" required>
+                <input type="datetime-local" class="form-control" id="endDate"
+                       th:field="*{endDate}" required>
             </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-secondary" onclick="closePopup()">Cancel</button>
         </form>
     </div>
 </div>
+
 </body>
 </html>

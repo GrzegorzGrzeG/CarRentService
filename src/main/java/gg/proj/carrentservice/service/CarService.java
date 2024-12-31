@@ -39,14 +39,6 @@ public class CarService {
         return carRepository.getCarsByIsAvailable(available);
     }
 
-    public void setCarAvailability(String id, boolean available) {
-        Car car = carRepository.findById(id).orElse(null);
-        if (Objects.nonNull(car)) {
-            car.setAvailable(available);
-            carRepository.save(car);
-        }
-    }
-
     public void deleteCar(String id) {
         carRepository.deleteById(id);
     }

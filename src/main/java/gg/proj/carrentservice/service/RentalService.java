@@ -60,13 +60,6 @@ public class RentalService {
 
         // 5. Zapis do bazy.
         rentalRepository.save(rental);
-
-        // 6. (Opcjonalnie) Ustawiamy auto jako niedostępne "od razu".
-        //    Jeśli chcesz, żeby do czasu fizycznego rozpoczęcia
-        //    też było "zajęte" w systemie.
-        //    Jeśli wolisz, by było zablokowane dopiero w dniu startu –
-        //    możesz pominąć tę linię lub wprowadzić inną logikę.
-        carService.setCarAvailability(rental.getCarId(), false);
     }
 
 
@@ -117,7 +110,6 @@ public class RentalService {
 
             rental.setStatus(RentalStatus.RETURNED);
             rentalRepository.save(rental);
-            carService.setCarAvailability(rental.getCarId(), true);
             carService.updateCar(car);
         }
     }
