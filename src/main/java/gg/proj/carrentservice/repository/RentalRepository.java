@@ -12,5 +12,6 @@ public interface RentalRepository extends MongoRepository<Rental, String> {
 
     List<Rental> findAllByCustomerId(String customerId);
     List<Rental> findAllByStatus(RentalStatus rentalStatus);
+    List<Rental> findAllByCarId(String carId);
 
 }

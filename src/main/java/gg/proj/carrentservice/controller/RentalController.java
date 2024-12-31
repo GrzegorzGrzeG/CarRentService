@@ -40,14 +40,20 @@ public class RentalController {
         model.addAttribute("rental", new Rental());
         return "/html/add_rental";
     }
-
+//todo dodać obłsugę błędów dla innych endpointów i po stronie frontu wyświetlanie tych błędów
     @PostMapping("/add")
-    public String processNewRentalForm(@ModelAttribute("rental") Rental rental) {
-        rentalService.addNewRental(rental);
+    public String processNewRentalForm(@ModelAttribute("rental") Rental rental, Model model) {
+        try {
+            rentalService.addNewRental(rental);
+        } catch (IllegalArgumentException ex) {
+            // Błąd (np. kolizja terminów)
+            model.addAttribute("errorMessage", ex.getMessage());
+            // Ponownie załaduj listę dostępnych samochodów, jeśli to potrzebne
+            model.addAttribute("cars", carService.getCarsByAvailable(true));
+            return "/html/add_rental";
+        }
         return "redirect:/rental/list";
     }
-
-    //todo zaimplementować dodawanie przebiegu podczas dodawania pojazdu
 
     @PostMapping("/return")
     public String processReturnRentalForm(@RequestParam("rentalId") String rentalId,

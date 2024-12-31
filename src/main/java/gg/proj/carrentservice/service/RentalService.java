@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,24 +25,50 @@ public class RentalService {
     }
 
     public void addNewRental(Rental rental) {
-        Duration duration = Duration.between(rental.getStartDate(), rental.getEndDate());
+        LocalDateTime start = rental.getStartDate();
+        LocalDateTime end = rental.getEndDate();
+
+        // 1. Czy auto dostępne w [start, end]?
+        boolean available = isCarAvailableDuring(rental.getCarId(), start, end);
+        if (!available) {
+            throw new IllegalArgumentException("Auto w tym terminie jest już zarezerwowane!");
+        }
+
+        // 2. Obliczenie czasu trwania rezerwacji.
+        //    W Duration mamy różnicę w sekundach / minutach / godzinach.
+        Duration duration = Duration.between(start, end);
         rental.setDuration(duration);
 
-        long days = duration.toDays();
-        long hours = duration.minusDays(days).toHours();
-        long minutes = duration.minusDays(days).minusHours(hours).toMinutes();
+        // 3. Obliczenie ceny (w oparciu o pełne dni z zaokrągleniem w górę).
+        long fullDays = ChronoUnit.DAYS.between(start, end);
 
-        long fullDays = ChronoUnit.DAYS.between(rental.getStartDate(), rental.getEndDate());
-
-        if (rental.getStartDate().plusDays(fullDays).isBefore(rental.getEndDate())) {
-            fullDays += 1;
+        // Sprawdzamy, czy jest jakaś "nadwyżka" ponad pełne dni
+        // (np. wynajem od 10 stycznia 10:00 do 11 stycznia 09:59 to prawie 1 dzień,
+        //  a od 10 stycznia 10:00 do 11 stycznia 10:01 to już 2 pełne dni do policzenia).
+        LocalDateTime possibleEnd = start.plusDays(fullDays);
+        if (possibleEnd.isBefore(end)) {
+            fullDays++;
         }
-        rental.setPrice(fullDays * carService.getCarById(rental.getCarId()).getPricePerDay());
 
+        Car car = carService.getCarById(rental.getCarId());
+        double dailyPrice = car.getPricePerDay();
+        double totalPrice = fullDays * dailyPrice;
+        rental.setPrice(totalPrice);
+
+        // 4. Ustawienie statusu (np. od razu RENTED, albo najpierw RESERVED).
         rental.setStatus(RentalStatus.RENTED);
+
+        // 5. Zapis do bazy.
         rentalRepository.save(rental);
+
+        // 6. (Opcjonalnie) Ustawiamy auto jako niedostępne "od razu".
+        //    Jeśli chcesz, żeby do czasu fizycznego rozpoczęcia
+        //    też było "zajęte" w systemie.
+        //    Jeśli wolisz, by było zablokowane dopiero w dniu startu –
+        //    możesz pominąć tę linię lub wprowadzić inną logikę.
         carService.setCarAvailability(rental.getCarId(), false);
     }
+
 
     public List<Rental> getAll() {
         return rentalRepository.findAll();
@@ -116,6 +144,31 @@ public class RentalService {
 
     public Rental getRentalById(String rentalId) {
         return rentalRepository.findById(rentalId).orElseThrow();
+    }
+
+    public boolean isCarAvailableDuring(String carId,
+                                        LocalDateTime start,
+                                        LocalDateTime end) {
+        // 1. Pobieramy wszystkie rezerwacje dla danego auta.
+        List<Rental> rentalsForCar = rentalRepository.findAllByCarId(carId);
+
+        // 2. Szukamy kolizji w datach z rezerwacjami, które nie mają statusu RETURNED.
+        for (Rental r : rentalsForCar) {
+            if (!r.getStatus().equals(RentalStatus.RETURNED)) {
+                // Sprawdzamy, czy [start, end] nakłada się na [rentalStart, rentalEnd]
+                if (datesOverlap(start, end, r.getStartDate(), r.getEndDate())) {
+                    return false; // Kolizja => auto zajęte
+                }
+            }
+        }
+        return true; // Brak kolizji
+    }
+
+    private boolean datesOverlap(LocalDateTime start1,
+                                 LocalDateTime end1,
+                                 LocalDateTime start2,
+                                 LocalDateTime end2) {
+        return !start1.isAfter(end2) && !end1.isBefore(start2);
     }
 
 }

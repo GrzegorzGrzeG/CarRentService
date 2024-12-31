@@ -30,7 +30,11 @@
                     document.getElementById("popupNumberOfSeats").textContent = data.numberOfSeats;
                     document.getElementById("popupPricePerDay").textContent = data.pricePerDay;
                     document.getElementById("popupIsAvailable").textContent = data.isAvailable ? "Yes" : "No";
-                    document.getElementById("carDetails").style.display = "block";
+                    document.getElementById("popupLastTechnicalReview").textContent = data.lastTechnicalReview;
+                    document.getElementById("popupNextTechnicalReview").textContent = data.nextTechnicalReview;
+                    document.getElementById("popupInsuranceValidTo").textContent = data.insuranceValidTo;
+                    document.getElementById("popupIsAvailable").textContent = data.mileage;
+                    document.getElementById("popupMileage").style.display = "block";
                 })
                 .catch(error => console.error('Error fetching car details:', error));
         }
@@ -143,6 +147,10 @@
         <tr><th>Number of Seats</th><td id="popupNumberOfSeats"></td></tr>
         <tr><th>Price Per Day</th><td id="popupPricePerDay"></td></tr>
         <tr><th>Is Available</th><td id="popupIsAvailable"></td></tr>
+        <tr><th>Last Technical Review</th><td id="popupLastTechnicalReview"></td></tr>
+        <tr><th>Next Technical Review</th><td id="popupNextTechnicalReview"></td></tr>
+        <tr><th>Insurance Valid To</th><td id="popupInsuranceValidTo"></td></tr>
+        <tr><th>Mileage</th><td id="popupMileage"></td></tr>
     </table>
     <button onclick="closePopup()">Close</button>
 </div>

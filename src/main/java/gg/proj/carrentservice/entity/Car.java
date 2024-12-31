@@ -41,12 +41,12 @@ public class Car {
     private int numberOfSeats;
     @Min(1)
     private double pricePerDay;
+    //todo rezygnuje z logiki isAvailable przetestować poprawność działania nowej logiki wynajmu i sprawdzania dostępności aut
     private boolean isAvailable;
     //todo zaimplementować to
     private LocalDate lastTechnicalReview;
     private LocalDate nextTechnicalReview;
     private LocalDate insuranceValidTo;
-    //todo zaimplementować to dodać do wynajmuj limit kilometrów i naliczanie
     private Long mileage;
 
 }

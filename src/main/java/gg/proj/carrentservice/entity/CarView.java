@@ -24,4 +24,5 @@ public class CarView {
     private LocalDate lastTechnicalReview;
     private LocalDate nextTechnicalReview;
     private LocalDate insuranceValidTo;
+    private Long mileage;
 }
