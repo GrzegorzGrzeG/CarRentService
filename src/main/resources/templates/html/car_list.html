@@ -124,6 +124,13 @@
                         th:value="${car.id}"
                         onclick="deleteCar(this)">Delete</button>
             </td>
+            <td>
+                <a class="btn btn-warning btn-sm"
+                    th:href="@{/car/edit/{id}(id=${car.id})}">
+                Edit
+            </a>
+
+            </td>
         </tr>
         </tbody>
     </table>

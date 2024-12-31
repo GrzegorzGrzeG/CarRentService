@@ -68,6 +68,10 @@ public class CarController {
         return "/html/edit_car";
     }
 
-
+    @PostMapping("/update")
+    public String processEditCarForm(@ModelAttribute("car") Car car) {
+        log.error("car id is {}", car.getBrand());
+        return "redirect:/car/list";
+    }
 
 }
