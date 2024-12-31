@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Data
 @Document(collection = "cars")
 public class Car {
+    public static final Long dailyMileageLimit = 250L;
+    public static final Long pricePerOverLimit = 2L;
     @Id
     private String id;
     @NotBlank(message = "Brand cannot be empty")
@@ -44,5 +46,7 @@ public class Car {
     private LocalDate lastTechnicalReview;
     private LocalDate nextTechnicalReview;
     private LocalDate insuranceValidTo;
+    //todo zaimplementować to dodać do wynajmuj limit kilometrów i naliczanie
+    private Long mileage;
 
 }

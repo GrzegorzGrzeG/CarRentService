@@ -1,6 +1,8 @@
 package gg.proj.carrentservice.controller;
 
+import gg.proj.carrentservice.entity.Car;
 import gg.proj.carrentservice.entity.Rental;
+import gg.proj.carrentservice.entity.RentalReturnCondition;
 import gg.proj.carrentservice.entity.RentalStatus;
 import gg.proj.carrentservice.service.CarService;
 import gg.proj.carrentservice.service.RentalService;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Duration;
 
 @Slf4j
 @Controller
@@ -26,6 +30,7 @@ public class RentalController {
     @GetMapping("/list")
     public String rentalList(Model model) {
         model.addAttribute("rentals", rentalService.prepareRentalView(rentalService.getRentalsByAvailability(RentalStatus.RENTED)));
+        model.addAttribute("condition", RentalReturnCondition.values());
         return "/html/rental_list";
     }
 
@@ -38,14 +43,17 @@ public class RentalController {
 
     @PostMapping("/add")
     public String processNewRentalForm(@ModelAttribute("rental") Rental rental) {
-        log.error("rental: " + rental);
         rentalService.addNewRental(rental);
         return "redirect:/rental/list";
     }
 
+    //todo zaimplementować dodawanie przebiegu podczas dodawania pojazdu
+
     @PostMapping("/return")
-    public String processReturnRentalForm(@RequestParam("rentalId") String rentalId) {
-        rentalService.returnRental(rentalId);
+    public String processReturnRentalForm(@RequestParam("rentalId") String rentalId,
+                                          @RequestParam("condition") RentalReturnCondition condition,
+                                          @RequestParam("mileage") Long mileage) {
+        rentalService.returnRental(rentalId, condition, mileage);
         return "redirect:/rental/list";
     }
 
@@ -55,10 +63,9 @@ public class RentalController {
         return "redirect:/rental/list";
     }
 
-
-    //todo zrobić archiwalne wynajmy
-//    @PostMapping("/archive")
-//    public String archiveRentals(Model model) {
-//        model.addAttribute("rentals", rentalService.prepareRentalView(rentalService.getRentalsByAvailability(RentalStatus.RENTED)));
-//    }
+    @GetMapping("/archive")
+    public String archiveRentals(Model model) {
+        model.addAttribute("rentals", rentalService.prepareRentalView(rentalService.getRentalsByAvailability(RentalStatus.RETURNED)));
+        return "/html/rental_list";
+    }
 }

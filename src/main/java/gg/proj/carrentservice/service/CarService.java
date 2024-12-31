@@ -125,4 +125,8 @@ public class CarService {
         return carViews;
     }
 
+    public void updateCar(Car car) {
+        carRepository.save(car);
+    }
+
 }

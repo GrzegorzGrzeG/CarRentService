@@ -1,8 +1,6 @@
 package gg.proj.carrentservice.service;
 
-import gg.proj.carrentservice.entity.Rental;
-import gg.proj.carrentservice.entity.RentalStatus;
-import gg.proj.carrentservice.entity.RentalView;
+import gg.proj.carrentservice.entity.*;
 import gg.proj.carrentservice.repository.RentalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -75,12 +73,24 @@ public class RentalService {
         return toReturn;
     }
 
-    public void returnRental(String rentalId) {
+    public void returnRental(String rentalId, RentalReturnCondition condition, Long mileage) {
         Rental rental = rentalRepository.findById(rentalId).orElseThrow();
         if (Objects.nonNull(rental)) {
+            rental.setCondition(condition);
+            Car car = carService.getCarById(rental.getCarId());
+            car.setMileage(mileage);
+            Long days = rental.getDuration().toDays();
+            Long mileageLimit = days * Car.dailyMileageLimit;
+
+            if (mileageLimit < mileage) {
+                Long overLimit = (mileage - mileageLimit) * Car.pricePerOverLimit;
+                rental.setPrice(rental.getPrice() + overLimit);
+            }
+
             rental.setStatus(RentalStatus.RETURNED);
             rentalRepository.save(rental);
             carService.setCarAvailability(rental.getCarId(), true);
+            carService.updateCar(car);
         }
     }
 
@@ -102,6 +112,10 @@ public class RentalService {
 
     public void deleteRental(String id) {
         rentalRepository.deleteById(id);
+    }
+
+    public Rental getRentalById(String rentalId) {
+        return rentalRepository.findById(rentalId).orElseThrow();
     }
 
 }

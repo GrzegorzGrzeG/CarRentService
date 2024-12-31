@@ -27,5 +27,7 @@ public class Rental {
     private RentalStatus status;
     private double price;
     private Duration duration;
+    private RentalReturnCondition condition;
+    private Long distance;
 
 }

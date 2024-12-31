@@ -24,11 +24,36 @@
                     .catch(error => console.error('Error deleting rental:', error));
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if(window.location.pathname.includes("archive")) {
+                document.querySelectorAll(".return-button").forEach(function (btn) {
+                    btn.style.display = "none";
+                })
+                document.querySelector(".rental-tittle").textContent = "Returned rentals";
+            }
+        })
+
+        function closePopup() {
+            document.getElementById("returnDetails").style.display = "none";
+        }
+
+       function showReturnForm(button) {
+            const rentalId = button.getAttribute("data-rental-id");
+            showRentalDetails(rentalId);
+       }
+
+       function showRentalDetails(rentalId) {
+            document.getElementById("returnDetails").style.display = "block";
+            document.getElementById("rentalId").value = rentalId;
+
+       }
+
     </script>
 </head>
 <body>
 <div>
-    <h1>Rental list</h1>
+    <h1 class="rental-tittle">Active rentals</h1>
     <table>
         <thead>
         <tr>
@@ -51,9 +76,11 @@
             <td th:text="${rental.duration}"></td>
             <td th:text="${rental.price}"></td>
             <td>
-                <form action="#" th:action="@{/rental/return}" method="post">
-                    <button type="submit" name="rentalId" th:value="${rental.rentalId}">Return</button>
-                </form>
+                <button type="button"
+                        th:attr="data-rental-id=${rental.rentalId}"
+                        th:value="${rental.rentalId}"
+                        onclick="showReturnForm(this)">Return
+                </button>
             </td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm"
@@ -65,5 +92,42 @@
     </table>
 </div>
 
+<div id="returnDetails" class="popup-overlay" style="display:none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="returnModalLabel">Return the car</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form th:action="@{/rental/return}" method="post">
+                <div class="modal-body">
+
+                    <input type="hidden" name="rentalId" id="rentalId">
+
+                    <div class="form-group">
+                        <label for="condition">Condition:</label>
+                        <select class="form-control" name="condition" id="condition">
+                            <option th:each="con : ${condition}" th:value="${con}" th:text="${con}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mileage">Mileage</label>
+                        <input type="number" class="form-control" id="mileage" name="mileage" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closePopup()">Anuluj</button>
+                    <button type="submit" class="btn btn-primary">Potwierdź</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
