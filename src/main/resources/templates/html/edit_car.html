@@ -29,13 +29,105 @@
                    th:field="*{model}" required/>
         </div>
 
-        <!-- analogicznie dla pozostałych pól... -->
+        <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" id="color" class="form-control"
+                   th:field="*{color}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="registrationNumber">Registration number</label>
+            <input type="text" id="registrationNumber" class="form-control"
+                   th:field="*{registrationNumber}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="vin">VIN</label>
+            <input type="text" id="vin" class="form-control"
+                   th:field="*{vin}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="productionYear">Production year</label>
+            <input type="number" id="productionYear" class="form-control"
+                   th:field="*{productionYear}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="engineCapacity">Engine capacity</label>
+            <input type="number" id="engineCapacity" class="form-control"
+                   th:field="*{engineCapacity}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="power">Power</label>
+            <input type="number" id="power" class="form-control"
+                   th:field="*{power}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="fuelType">Fuel type</label>
+            <select id="fuelType" class="form-control"
+                    th:field="*{fuelType}" required>
+                <option th:each="fuel : ${fuelTypes}"
+                        th:value="${fuel}"
+                        th:text="${fuel}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="bodyType">Body type</label>
+            <select id="bodyType" class="form-control"
+                    th:field="*{bodyType}" required>
+                <option th:each="body : ${bodyTypes}"
+                        th:value="${body}"
+                        th:text="${body}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="transmission">Transmission</label>
+            <select id="transmission" class="form-control"
+                    th:field="*{transmission}" required>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="numberOfSeats">Number of seats</label>
+            <input type="number" id="numberOfSeats" class="form-control"
+                   th:field="*{numberOfSeats}" required/>
+        </div>
 
         <div class="form-group">
             <label for="pricePerDay">Price per day</label>
             <input type="number" step="0.01" class="form-control"
                    id="pricePerDay" th:field="*{pricePerDay}" required/>
         </div>
+
+        <div class="form-group">
+            <label for="lastTechnicalReview">Last technical review</label>
+            <input type="date" id="lastTechnicalReview" class="form-control"
+                   th:field="*{lastTechnicalReview}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="nextTechnicalReview">Next technical review</label>
+            <input type="date" id="nextTechnicalReview" class="form-control"
+                   th:field="*{nextTechnicalReview}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="insuranceValidTo">Insurance valid to</label>
+            <input type="date" id="insuranceValidTo" class="form-control"
+                   th:field="*{insuranceValidTo}" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="mileage">Mileage</label>
+            <input type="number" id="mileage" class="form-control"
+                   th:field="*{mileage}" required/>
+        </div>
+
 
         <button type="submit" class="btn btn-primary">Save changes</button>
         <a th:href="@{/car/list}" class="btn btn-secondary">Cancel</a>

@@ -12,47 +12,47 @@
     <form action="#" th:action="@{/customer/add}" method="post" th:object="${newCustomer}">
         <div class="form-group">
             <label for="firstName">Firstname:</label>
-            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" />
+            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required/>
 
             <label for="lastName">Lastname:</label>
-            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" />
+            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required/>
 
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}" />
+            <input type="email" class="form-control" id="email" th:field="*{email}" required/>
 
             <label for="phoneNumber">Phone number:</label>
-            <input type="number" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" />
+            <input type="number" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" required/>
 
             <label for="address">Address:</label>
-            <input type="text" class="form-control" id="address" th:field="*{address}" />
+            <input type="text" class="form-control" id="address" th:field="*{address}" required/>
 
             <label for="zipCode">Zip code:</label>
-            <input type="text" class="form-control" id="zipCode" th:field="*{zipCode}" />
+            <input type="text" class="form-control" id="zipCode" th:field="*{zipCode}" required/>
 
             <label for="city">City:</label>
-            <input type="text" class="form-control" id="city" th:field="*{city}" />
+            <input type="text" class="form-control" id="city" th:field="*{city}" required/>
 
             <label for="country">Country:</label>
-            <input type="text" class="form-control" id="country" th:field="*{country}" />
+            <input type="text" class="form-control" id="country" th:field="*{country}" required/>
 
             <label for="drivingLicenseNumber">Driving license number:</label>
-            <input type="text" class="form-control" id="drivingLicenseNumber" th:field="*{drivingLicenseNumber}" />
+            <input type="text" class="form-control" id="drivingLicenseNumber" th:field="*{drivingLicenseNumber}"required />
 
             <label for="drivingLicenseIssueDate">Driving license issue date: </label>
-            <input type="date" class="form-control" id="drivingLicenseIssueDate" th:field="*{drivingLicenseIssueDate}" />
+            <input type="date" class="form-control" id="drivingLicenseIssueDate" th:field="*{drivingLicenseIssueDate}" required/>
 
 
             <label for="drivingLicenseExpirationDate">Driving license expiration date:</label>
-            <input type="date" class="form-control" id="drivingLicenseExpirationDate" th:field="*{drivingLicenseExpirationDate}" />
+            <input type="date" class="form-control" id="drivingLicenseExpirationDate" th:field="*{drivingLicenseExpirationDate}" required/>
 
             <label for="pesel">Pesel:</label>
-            <input type="text" class="form-control" id="pesel" th:field="*{pesel}" />
+            <input type="text" class="form-control" id="pesel" th:field="*{pesel}" required/>
 
             <label for="idNumber">Id number:</label>
-            <input type="text" class="form-control" id="idNumber" th:field="*{idNumber}" />
+            <input type="text" class="form-control" id="idNumber" th:field="*{idNumber}" required/>
 
             <label for="dateOfBirth">Date of birth </label>
-            <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}" />
+            <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}" required/>
 
         </div>
         <button type="submit" class="btn btn-primary">Add new customer</button>

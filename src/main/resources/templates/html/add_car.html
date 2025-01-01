@@ -12,61 +12,61 @@
     <form action="#" th:action="@{/car/add}" method="post" th:object="${newCar}">
         <div class="form-group">
             <label for="brand">Brand:</label>
-            <input type="text" class="form-control" id="brand" th:field="*{brand}" />
+            <input type="text" class="form-control" id="brand" th:field="*{brand}" required/>
 
             <label for="model">Model:</label>
-            <input type="text" class="form-control" id="model" th:field="*{model}" />
+            <input type="text" class="form-control" id="model" th:field="*{model}" required/>
 
             <label for="color">Color:</label>
-            <input type="text" class="form-control" id="color" th:field="*{color}" />
+            <input type="text" class="form-control" id="color" th:field="*{color}" required/>
 
             <label for="registrationNumber">Registration Number:</label>
-            <input type="text" class="form-control" id="registrationNumber" th:field="*{registrationNumber}" />
+            <input type="text" class="form-control" id="registrationNumber" th:field="*{registrationNumber}" required/>
 
             <label for="vin">VIN:</label>
-            <input type="text" class="form-control" id="vin" th:field="*{vin}" />
+            <input type="text" class="form-control" id="vin" th:field="*{vin}" required/>
 
             <label for="productionYear">Production Year:</label>
-            <input type="text" class="form-control" id="productionYear" th:field="*{productionYear}" />
+            <input type="text" class="form-control" id="productionYear" th:field="*{productionYear}" required/>
 
             <label for="engineCapacity">Engine Capacity:</label>
-            <input type="number" class="form-control" id="engineCapacity" th:field="*{engineCapacity}" />
+            <input type="number" class="form-control" id="engineCapacity" th:field="*{engineCapacity}" required/>
 
             <label for="power">Power:</label>
-            <input type="number" class="form-control" id="power" th:field="*{power}" />
+            <input type="number" class="form-control" id="power" th:field="*{power}" required/>
 
             <label for="fuelType">Fuel Type:</label>
-            <select class="form-control" id="fuelType" th:field="*{fuelType}">
+            <select class="form-control" id="fuelType" th:field="*{fuelType}" required>
                 <option th:each="fuel : ${fuelTypes}" th:value="${fuel}" th:text="${fuel}"></option>
             </select>
 
             <label for="bodyType">Body Type:</label>
-            <select class="form-control" id="bodyType" th:field="*{bodyType}">
+            <select class="form-control" id="bodyType" th:field="*{bodyType}" required>
                 <option th:each="body : ${bodyType}" th:value="${body}" th:text="${body}"></option>
             </select>
 
             <label for="transmission">Transmission:</label>
-            <select class="form-control" id="transmission" th:field="*{transmission}">
+            <select class="form-control" id="transmission" th:field="*{transmission}" required>
                 <option th:each="trans : ${transmission}" th:value="${trans}" th:text="${trans}"></option>
             </select>
 
             <label for="numberOfSeats">Number Of Seats:</label>
-            <input type="number" class="form-control" id="numberOfSeats" th:field="*{numberOfSeats}" />
+            <input type="number" class="form-control" id="numberOfSeats" th:field="*{numberOfSeats}" required/>
 
             <label for="pricePerDay">Price Per Day:</label>
-            <input type="number" class="form-control" id="pricePerDay" th:field="*{pricePerDay}" />
+            <input type="number" class="form-control" id="pricePerDay" th:field="*{pricePerDay}" required/>
 
             <label for="lastTechnicalReview">Last technical review:</label>
-            <input type="date" class="form-control" id="lastTechnicalReview" th:field="*{lastTechnicalReview}" />
+            <input type="date" class="form-control" id="lastTechnicalReview" th:field="*{lastTechnicalReview}" required/>
 
             <label for="nextTechnicalReview">Next technical review:</label>
-            <input type="date" class="form-control" id="nextTechnicalReview" th:field="*{nextTechnicalReview}" />
+            <input type="date" class="form-control" id="nextTechnicalReview" th:field="*{nextTechnicalReview}" required/>
 
             <label for="insuranceValidTo">Insurance valid to:</label>
-            <input type="date" class="form-control" id="insuranceValidTo" th:field="*{insuranceValidTo}" />
+            <input type="date" class="form-control" id="insuranceValidTo" th:field="*{insuranceValidTo}" required/>
 
             <label for="mileage">Mileage:</label>
-            <input type="number" class="form-control" id="mileage" th:field="*{mileage}" />
+            <input type="number" class="form-control" id="mileage" th:field="*{mileage}" required/>
 
         </div>
         <button type="submit" class="btn btn-primary">Add new car</button>
