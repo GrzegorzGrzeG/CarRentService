@@ -43,7 +43,6 @@ public class Car {
     private double pricePerDay;
     //todo rezygnuje z logiki isAvailable przetestować poprawność działania nowej logiki wynajmu i sprawdzania dostępności aut
     private boolean isAvailable;
-    //todo zaimplementować to
     private LocalDate lastTechnicalReview;
     private LocalDate nextTechnicalReview;
     private LocalDate insuranceValidTo;

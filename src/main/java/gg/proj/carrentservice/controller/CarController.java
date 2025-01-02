@@ -58,7 +58,6 @@ public class CarController {
         return "redirect:/car/list";
     }
 
-//todo dodać edycję
     @GetMapping("/edit/{id}")
     public String editCarForm(@PathVariable String id, Model model) {
         model.addAttribute("car", carService.getCarById(id));

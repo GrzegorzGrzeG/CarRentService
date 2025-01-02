@@ -47,7 +47,7 @@ public class RentalController {
             rentalService.addNewRental(rental);
         } catch (IllegalArgumentException ex) {
             // Błąd (np. kolizja terminów)
-            model.addAttribute("errorMessage", ex.getMessage());
+            model.addAttribute("errorMessage", "Car is not available in this period");
             // Ponownie załaduj listę dostępnych samochodów, jeśli to potrzebne
             model.addAttribute("cars", carService.getAllCarViews(carService.getCarsByAvailable(true)));
             return "/html/add_rental";
