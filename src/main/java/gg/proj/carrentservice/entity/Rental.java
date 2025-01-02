@@ -29,5 +29,6 @@ public class Rental {
     private Duration duration;
     private RentalReturnCondition condition;
     private Long distance;
+    //todo zrobić wysyłkę maila z potwierdzeniem wypożyczenia i po oddaniu aut z fakturą
 
 }

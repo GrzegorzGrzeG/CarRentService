@@ -57,4 +57,16 @@ public class CustomerController {
         return "redirect:/customer/list";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editCustomerForm(@PathVariable String id, Model model) {
+        model.addAttribute("customer", customerService.getCustomerById(id));
+        return "/html/edit_customer";
+    }
+
+    @PostMapping("/update")
+    public String updateCustomer(@ModelAttribute("customer") Customer customer) {
+        customerService.updateCustomer(customer);
+        return "redirect:/customer/list";
+    }
+
 }

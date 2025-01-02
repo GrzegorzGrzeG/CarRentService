@@ -74,4 +74,18 @@ public class RentalController {
         model.addAttribute("rentals", rentalService.prepareRentalView(rentalService.getRentalsByAvailability(RentalStatus.RETURNED)));
         return "/html/rental_list";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editRentalForm(@PathVariable String id, Model model) {
+        model.addAttribute("rental", rentalService.getRentalById(id));
+        model.addAttribute("status", RentalStatus.values());
+        model.addAttribute("condition", RentalReturnCondition.values());
+        return "/html/edit_rental";
+    }
+
+    @PostMapping("/update")
+    public String processEditRentalForm(@ModelAttribute("rental") Rental rental) {
+        rentalService.updateRental(rental);
+        return "redirect:/rental/list";
+    }
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Rental</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+
+  <h1>Edit Rental</h1>
+
+  <form th:action="@{/rental/update}" th:object="${rental}" method="post">
+
+    <input type="hidden" th:field="*{id}"/>
+
+    <div class="form-group">
+      <label for="startDate">Start date:</label>
+      <input type="date" id="startDate" class="form-control"
+                th:field="*{startDate}" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End date:</label>
+      <input type="date" id="endDate" class="form-control"
+             th:field="*{endDate}" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" id="price" class="form-control"
+             th:field="*{price}" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="distance">Distance:</label>
+      <input type="number" id="distance" class="form-control"
+             th:field="*{distance}" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="condition">Condition:</label>
+      <select class="form-control" name="condition" id="condition">
+        <option th:each="con : ${condition}" th:value="${con}" th:text="${con}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select class="form-control" name="status" id="status">
+        <option th:each="sts : ${status}" th:value="${sts}" th:text="${sts}"></option>
+      </select>
+    </div>
+
+  </form>
+
+</div>
+</body>
+</html>

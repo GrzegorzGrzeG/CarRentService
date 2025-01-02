@@ -163,4 +163,8 @@ public class RentalService {
         return !start1.isAfter(end2) && !end1.isBefore(start2);
     }
 
+    public void updateRental(Rental rental) {
+        rentalRepository.save(rental);
+    }
+
 }

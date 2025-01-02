@@ -11,10 +11,8 @@
 
     <h1>Edit Car</h1>
 
-    <!-- formularz: wysyłamy do /car/update (POST) -->
     <form th:action="@{/car/update}" th:object="${car}" method="post">
 
-        <!-- Przechowujemy ID, by wiedzieć, który rekord edytujemy -->
         <input type="hidden" th:field="*{id}"/>
 
         <div class="form-group">

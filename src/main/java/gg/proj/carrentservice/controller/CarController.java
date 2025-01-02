@@ -71,6 +71,7 @@ public class CarController {
     @PostMapping("/update")
     public String processEditCarForm(@ModelAttribute("car") Car car) {
         log.error("car id is {}", car.getBrand());
+        carService.updateCar(car);
         return "redirect:/car/list";
     }
 

@@ -79,5 +79,9 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
+    public void updateCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+
 
 }
