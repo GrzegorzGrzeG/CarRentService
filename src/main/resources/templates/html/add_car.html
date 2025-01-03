@@ -2,75 +2,150 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Car Form</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container mt-5">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Car Rental</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="carsDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Cars
+                </a>
+                <div class="dropdown-menu" aria-labelledby="carsDropdown">
+                    <a class="dropdown-item" th:href="@{/car/add}">Add</a>
+                    <a class="dropdown-item" th:href="@{/car/list}">List</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="rentalsDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Rentals
+                </a>
+                <div class="dropdown-menu" aria-labelledby="rentalsDropdown">
+                    <a class="dropdown-item" th:href="@{/rental/add}">Add</a>
+                    <a class="dropdown-item" th:href="@{/rental/list}">List</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="customersDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Customers
+                </a>
+                <div class="dropdown-menu" aria-labelledby="customersDropdown">
+                    <a class="dropdown-item" th:href="@{/customer/add}">Add</a>
+                    <a class="dropdown-item" th:href="@{/customer/list}">List</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Add New Car</h1>
     <form action="#" th:action="@{/car/add}" method="post" th:object="${newCar}">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="brand">Brand:</label>
+                <input type="text" class="form-control" id="brand" th:field="*{brand}" required/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="model">Model:</label>
+                <input type="text" class="form-control" id="model" th:field="*{model}" required/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="color">Color:</label>
+                <input type="text" class="form-control" id="color" th:field="*{color}" required/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="registrationNumber">Registration Number:</label>
+                <input type="text" class="form-control" id="registrationNumber" th:field="*{registrationNumber}" required/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="vin">VIN:</label>
+                <input type="text" class="form-control" id="vin" th:field="*{vin}" required/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="productionYear">Production Year:</label>
+                <input type="number" class="form-control" id="productionYear" th:field="*{productionYear}" required/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="engineCapacity">Engine Capacity:</label>
+                <input type="number" class="form-control" id="engineCapacity" th:field="*{engineCapacity}" required/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="power">Power:</label>
+                <input type="number" class="form-control" id="power" th:field="*{power}" required/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="fuelType">Fuel Type:</label>
+                <select class="form-control" id="fuelType" th:field="*{fuelType}" required>
+                    <option th:each="fuel : ${fuelTypes}" th:value="${fuel}" th:text="${fuel}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="bodyType">Body Type:</label>
+                <select class="form-control" id="bodyType" th:field="*{bodyType}" required>
+                    <option th:each="body : ${bodyType}" th:value="${body}" th:text="${body}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="transmission">Transmission:</label>
+                <select class="form-control" id="transmission" th:field="*{transmission}" required>
+                    <option th:each="trans : ${transmission}" th:value="${trans}" th:text="${trans}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="numberOfSeats">Number of Seats:</label>
+                <input type="number" class="form-control" id="numberOfSeats" th:field="*{numberOfSeats}" required/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="pricePerDay">Price Per Day:</label>
+                <input type="number" class="form-control" id="pricePerDay" th:field="*{pricePerDay}" required/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="lastTechnicalReview">Last Technical Review:</label>
+                <input type="date" class="form-control" id="lastTechnicalReview" th:field="*{lastTechnicalReview}" required/>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="nextTechnicalReview">Next Technical Review:</label>
+                <input type="date" class="form-control" id="nextTechnicalReview" th:field="*{nextTechnicalReview}" required/>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="insuranceValidTo">Insurance Valid To:</label>
+                <input type="date" class="form-control" id="insuranceValidTo" th:field="*{insuranceValidTo}" required/>
+            </div>
+        </div>
         <div class="form-group">
-            <label for="brand">Brand:</label>
-            <input type="text" class="form-control" id="brand" th:field="*{brand}" required/>
-
-            <label for="model">Model:</label>
-            <input type="text" class="form-control" id="model" th:field="*{model}" required/>
-
-            <label for="color">Color:</label>
-            <input type="text" class="form-control" id="color" th:field="*{color}" required/>
-
-            <label for="registrationNumber">Registration Number:</label>
-            <input type="text" class="form-control" id="registrationNumber" th:field="*{registrationNumber}" required/>
-
-            <label for="vin">VIN:</label>
-            <input type="text" class="form-control" id="vin" th:field="*{vin}" required/>
-
-            <label for="productionYear">Production Year:</label>
-            <input type="text" class="form-control" id="productionYear" th:field="*{productionYear}" required/>
-
-            <label for="engineCapacity">Engine Capacity:</label>
-            <input type="number" class="form-control" id="engineCapacity" th:field="*{engineCapacity}" required/>
-
-            <label for="power">Power:</label>
-            <input type="number" class="form-control" id="power" th:field="*{power}" required/>
-
-            <label for="fuelType">Fuel Type:</label>
-            <select class="form-control" id="fuelType" th:field="*{fuelType}" required>
-                <option th:each="fuel : ${fuelTypes}" th:value="${fuel}" th:text="${fuel}"></option>
-            </select>
-
-            <label for="bodyType">Body Type:</label>
-            <select class="form-control" id="bodyType" th:field="*{bodyType}" required>
-                <option th:each="body : ${bodyType}" th:value="${body}" th:text="${body}"></option>
-            </select>
-
-            <label for="transmission">Transmission:</label>
-            <select class="form-control" id="transmission" th:field="*{transmission}" required>
-                <option th:each="trans : ${transmission}" th:value="${trans}" th:text="${trans}"></option>
-            </select>
-
-            <label for="numberOfSeats">Number Of Seats:</label>
-            <input type="number" class="form-control" id="numberOfSeats" th:field="*{numberOfSeats}" required/>
-
-            <label for="pricePerDay">Price Per Day:</label>
-            <input type="number" class="form-control" id="pricePerDay" th:field="*{pricePerDay}" required/>
-
-            <label for="lastTechnicalReview">Last technical review:</label>
-            <input type="date" class="form-control" id="lastTechnicalReview" th:field="*{lastTechnicalReview}" required/>
-
-            <label for="nextTechnicalReview">Next technical review:</label>
-            <input type="date" class="form-control" id="nextTechnicalReview" th:field="*{nextTechnicalReview}" required/>
-
-            <label for="insuranceValidTo">Insurance valid to:</label>
-            <input type="date" class="form-control" id="insuranceValidTo" th:field="*{insuranceValidTo}" required/>
-
             <label for="mileage">Mileage:</label>
             <input type="number" class="form-control" id="mileage" th:field="*{mileage}" required/>
-
         </div>
-        <button type="submit" class="btn btn-primary">Add new car</button>
+        <button type="submit" class="btn btn-primary btn-block">Add New Car</button>
     </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

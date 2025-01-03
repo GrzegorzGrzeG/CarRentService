@@ -1,60 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Edit Rental</title>
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Rental</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container mt-5">
 
-  <h1>Edit Rental</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Car Rental</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="carsDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Cars
+        </a>
+        <div class="dropdown-menu" aria-labelledby="carsDropdown">
+          <a class="dropdown-item" th:href="@{/car/add}">Add</a>
+          <a class="dropdown-item" th:href="@{/car/list}">List</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="rentalsDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Rentals
+        </a>
+        <div class="dropdown-menu" aria-labelledby="rentalsDropdown">
+          <a class="dropdown-item" th:href="@{/rental/add}">Add</a>
+          <a class="dropdown-item" th:href="@{/rental/list}">List</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="customersDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Customers
+        </a>
+        <div class="dropdown-menu" aria-labelledby="customersDropdown">
+          <a class="dropdown-item" th:href="@{/customer/add}">Add</a>
+          <a class="dropdown-item" th:href="@{/customer/list}">List</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
 
+<div class="container my-5">
+  <h1 class="text-center mb-4">Edit Rental</h1>
   <form th:action="@{/rental/update}" th:object="${rental}" method="post">
 
     <input type="hidden" th:field="*{id}"/>
 
-    <div class="form-group">
-      <label for="startDate">Start date:</label>
-      <input type="date" id="startDate" class="form-control"
-                th:field="*{startDate}" required/>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" class="form-control" th:field="*{startDate}" required/>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" class="form-control" th:field="*{endDate}" required/>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="endDate">End date:</label>
-      <input type="date" id="endDate" class="form-control"
-             th:field="*{endDate}" required/>
-    </div>
-
-    <div class="form-group">
-      <label for="price">Price:</label>
-      <input type="number" id="price" class="form-control"
-             th:field="*{price}" required/>
-    </div>
-
-    <div class="form-group">
-      <label for="distance">Distance:</label>
-      <input type="number" id="distance" class="form-control"
-             th:field="*{distance}" required/>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="price">Price:</label>
+        <input type="number" id="price" class="form-control" th:field="*{price}" required/>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="distance">Distance:</label>
+        <input type="number" id="distance" class="form-control" th:field="*{distance}" required/>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="condition">Condition:</label>
-      <select class="form-control" name="condition" id="condition">
+      <select class="form-control" name="condition" id="condition" th:field="*{condition}" required>
         <option th:each="con : ${condition}" th:value="${con}" th:text="${con}"></option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="status">Status:</label>
-      <select class="form-control" name="status" id="status">
+      <select class="form-control" name="status" id="status" th:field="*{status}" required>
         <option th:each="sts : ${status}" th:value="${sts}" th:text="${sts}"></option>
       </select>
     </div>
 
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a th:href="@{/rental/list}" class="btn btn-secondary">Cancel</a>
+    </div>
   </form>
-
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
