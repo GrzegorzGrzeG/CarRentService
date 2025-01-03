@@ -44,7 +44,6 @@ public class RentalController {
     }
 
     //todo dodać obłsugę błędów dla innych endpointów i po stronie frontu wyświetlanie tych błędów
-    //todo dodać obłsugę dat podczas wynajmu by data oddania nie była późniejsza niż data odbioru
     @PostMapping("/add")
     public String processNewRentalForm(@ModelAttribute("rental") Rental rental, @RequestParam("customerId") String customerId, Model model) {
         log.info("Received rental: {}", rental);

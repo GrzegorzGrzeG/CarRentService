@@ -117,7 +117,7 @@
             <div class="form-group">
                 <label for="endDate">End Date</label>
                 <input type="datetime-local" class="form-control" id="endDate"
-                       th:field="*{endDate}" required>
+                       th:field="*{endDate}" required onfocus="this.min = document.getElementById('startDate').value">
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
