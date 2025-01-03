@@ -1,10 +1,9 @@
 package gg.proj.carrentservice.controller;
 
-import gg.proj.carrentservice.entity.Car;
-import gg.proj.carrentservice.entity.Rental;
-import gg.proj.carrentservice.entity.RentalReturnCondition;
-import gg.proj.carrentservice.entity.RentalStatus;
+import gg.proj.carrentservice.entity.*;
 import gg.proj.carrentservice.service.CarService;
+import gg.proj.carrentservice.service.CustomerService;
+import gg.proj.carrentservice.service.EmailService;
 import gg.proj.carrentservice.service.RentalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,12 @@ public class RentalController {
     @Autowired
     private final RentalService rentalService;
     private final CarService carService;
+    private final EmailService emailService;
 
-    public RentalController(RentalService rentalService, CarService carService) {
+    public RentalController(RentalService rentalService, CarService carService, EmailService emailService) {
         this.rentalService = rentalService;
         this.carService = carService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/list")
@@ -45,6 +46,7 @@ public class RentalController {
     public String processNewRentalForm(@ModelAttribute("rental") Rental rental, Model model) {
         try {
             rentalService.addNewRental(rental);
+            emailService.sendConfirmationEmail(rental);
         } catch (IllegalArgumentException ex) {
             // Błąd (np. kolizja terminów)
             model.addAttribute("errorMessage", "Car is not available in this period");
