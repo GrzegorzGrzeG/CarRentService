@@ -15,11 +15,9 @@ import java.util.Objects;
 @Service
 public class CarService {
     private final CarRepository carRepository;
-    private final RentalService rentalService;
 
-    public CarService(CarRepository carRepository, @Lazy RentalService rentalService) {
+    public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
-        this.rentalService = rentalService;
     }
 
     public List<Car> getAll() {
@@ -33,10 +31,6 @@ public class CarService {
 
     public Car getCarById(String id) {
         return carRepository.findById(id).orElse(null);
-    }
-
-    public List<Car> getCarsByAvailable(boolean available) {
-        return carRepository.getCarsByIsAvailable(available);
     }
 
     public void deleteCar(String id) {

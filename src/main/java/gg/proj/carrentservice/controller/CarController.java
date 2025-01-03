@@ -37,6 +37,12 @@ public class CarController {
         return "redirect:/car/details/" + carId;
     }
 
+    @GetMapping("/details/{id}")
+    @ResponseBody
+    public CarView getCarDetails(@PathVariable String id) {
+        return carService.getCarView(carService.getCarById(id));
+    }
+
     @GetMapping("/add")
     public String newCarForm(Model model) {
         model.addAttribute("newCar", new Car());
@@ -49,7 +55,7 @@ public class CarController {
     @PostMapping("/add")
     public String processNewCarForm(@ModelAttribute("newCar") Car car) {
         carService.addNewCar(car);
-        return "redirect:/car_list";
+        return "redirect:/car/list";
     }
 
     @GetMapping("/delete/{id}")

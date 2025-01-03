@@ -37,7 +37,7 @@ public class RentalController {
 
     @GetMapping("/add")
     public String newRentalForm(Model model) {
-        model.addAttribute("cars", carService.getAllCarViews(carService.getCarsByAvailable(true)));
+        model.addAttribute("cars", carService.getAllCarViews(carService.getAll()));
         model.addAttribute("customers", customerService.getAllCustomers());
         model.addAttribute("rental", new Rental());
         return "/html/add_rental";
@@ -61,7 +61,7 @@ public class RentalController {
         } catch (IllegalArgumentException ex) {
             log.error("Error while adding rental: {}", ex.getMessage());
             model.addAttribute("errorMessage", ex.getMessage());
-            model.addAttribute("cars", carService.getAllCarViews(carService.getCarsByAvailable(true)));
+            model.addAttribute("cars", carService.getAllCarViews(carService.getAll()));
             return "/html/add_rental";
         }
         return "redirect:/rental/list";

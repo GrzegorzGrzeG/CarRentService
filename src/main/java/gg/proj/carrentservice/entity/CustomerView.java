@@ -24,5 +24,4 @@ public class CustomerView {
     private String pesel;
     private String idNumber;
     private LocalDate dateOfBirth;
-
 }

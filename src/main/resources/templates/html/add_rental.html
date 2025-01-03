@@ -102,7 +102,7 @@
             <th>Production Year</th>
             <th>Transmission Type</th>
             <th>Price Per Day</th>
-            <th>Is Available</th>
+<!--            <th>Is Available</th>-->
             <th>Actions</th>
         </tr>
         </thead>
@@ -114,7 +114,7 @@
             <td th:text="${car.productionYear}"></td>
             <td th:text="${car.transmission}"></td>
             <td th:text="${car.pricePerDay}"></td>
-            <td th:text="${car.isAvailable ? 'Yes' : 'No'}"></td>
+<!--            <td th:text="${car.isAvailable ? 'Yes' : 'No'}"></td>-->
             <td>
                 <button type="button" class="btn btn-primary btn-sm"
                         th:attr="data-car-id=${car.id}"
