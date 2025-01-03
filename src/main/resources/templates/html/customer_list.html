@@ -108,11 +108,21 @@
                 <button type="button" class="btn btn-primary btn-sm"
                         th:attr="data-customer-id=${customer.customerId}"
                         th:value="${customer.customerId}"
-                        onclick="showCustomerDetailsFromData(this)">View</button>
+                        onclick="showCustomerDetailsFromData(this)">View
+                </button>
+            </td>
+            <td>
                 <button type="button" class="btn btn-danger btn-sm"
                         th:attr="data-customer-id=${customer.customerId}"
                         th:value="${customer.customerId}"
-                        onclick="deleteCustomer(this)">Delete</button>
+                        onclick="deleteCustomer(this)">Delete
+                </button>
+            </td>
+            <td>
+                <a class="btn btn-warning btn-sm"
+                   th:href="@{/customer/edit/{id}(id=${customer.customerId})}">
+                    Edit
+                </a>
             </td>
         </tr>
         </tbody>
@@ -122,20 +132,62 @@
 <div id="customerDetails" class="popup-overlay" style="display:none;">
     <h1>Customer details</h1>
     <table>
-        <tr><th>Firstname</th><td id="popupFirstName"></td></tr>
-        <tr><th>Lastname</th><td id="popupLastName"></td></tr>
-        <tr><th>Pesel</th><td id="popupPesel"></td></tr>
-        <tr><th>Id number</th><td id="popupIdNumber"></td></tr>
-        <tr><th>Date of birth</th><td id="popupDateOfBirth"></td></tr>
-        <tr><th>Email</th><td id="popupEmail"></td></tr>
-        <tr><th>Phone number</th><td id="popupPhoneNumber"></td></tr>
-        <tr><th>Address</th><td id="popupAddress"></td></tr>
-        <tr><th>Zip code</th><td id="popupZipCode"></td></tr>
-        <tr><th>City</th><td id="popupCity"></td></tr>
-        <tr><th>Country</th><td id="popupCountry"></td></tr>
-        <tr><th>Driving license number</th><td id="popupDrivingLicenseNumber"></td></tr>
-        <tr><th>Driving licence issue date</th><td id="popupDrivingLicenceIssueDate"></td></tr>
-        <tr><th>Driving licence expiration date</th><td id="popupDrivingLicenseExpirationDate"></td></tr>
+        <tr>
+            <th>Firstname</th>
+            <td id="popupFirstName"></td>
+        </tr>
+        <tr>
+            <th>Lastname</th>
+            <td id="popupLastName"></td>
+        </tr>
+        <tr>
+            <th>Pesel</th>
+            <td id="popupPesel"></td>
+        </tr>
+        <tr>
+            <th>Id number</th>
+            <td id="popupIdNumber"></td>
+        </tr>
+        <tr>
+            <th>Date of birth</th>
+            <td id="popupDateOfBirth"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td id="popupEmail"></td>
+        </tr>
+        <tr>
+            <th>Phone number</th>
+            <td id="popupPhoneNumber"></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td id="popupAddress"></td>
+        </tr>
+        <tr>
+            <th>Zip code</th>
+            <td id="popupZipCode"></td>
+        </tr>
+        <tr>
+            <th>City</th>
+            <td id="popupCity"></td>
+        </tr>
+        <tr>
+            <th>Country</th>
+            <td id="popupCountry"></td>
+        </tr>
+        <tr>
+            <th>Driving license number</th>
+            <td id="popupDrivingLicenseNumber"></td>
+        </tr>
+        <tr>
+            <th>Driving licence issue date</th>
+            <td id="popupDrivingLicenceIssueDate"></td>
+        </tr>
+        <tr>
+            <th>Driving licence expiration date</th>
+            <td id="popupDrivingLicenseExpirationDate"></td>
+        </tr>
     </table>
     <button onclick="closePopup()">Close</button>
 </div>

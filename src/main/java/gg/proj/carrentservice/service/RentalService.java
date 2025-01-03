@@ -18,49 +18,56 @@ import java.util.Objects;
 public class RentalService {
     private final RentalRepository rentalRepository;
     private final CarService carService;
+    private final EmailService emailService;
 
-    public RentalService(RentalRepository rentalRepository, CarService carService) {
+    public RentalService(RentalRepository rentalRepository, CarService carService, EmailService emailService) {
         this.rentalRepository = rentalRepository;
         this.carService = carService;
+        this.emailService = emailService;
     }
 
     public void addNewRental(Rental rental) {
-        LocalDateTime start = rental.getStartDate();
-        LocalDateTime end = rental.getEndDate();
+        log.info("Starting to add new rental: {}", rental);
 
-        // 1. Czy auto dostępne w [start, end]?
-        boolean available = isCarAvailableDuring(rental.getCarId(), start, end);
+        // Sprawdzenie dostępności
+        boolean available = isCarAvailableDuring(rental.getCarId(), rental.getStartDate(), rental.getEndDate());
+        log.info("Car availability check result: {}", available);
+
         if (!available) {
-            throw new IllegalArgumentException("Auto w tym terminie jest już zarezerwowane!");
+            log.warn("Car is not available for the requested period");
+            throw new IllegalArgumentException("Car is not available in this period");
         }
 
-        // 2. Obliczenie czasu trwania rezerwacji.
-        //    W Duration mamy różnicę w sekundach / minutach / godzinach.
-        Duration duration = Duration.between(start, end);
+        // Obliczanie czasu trwania
+        Duration duration = Duration.between(rental.getStartDate(), rental.getEndDate());
         rental.setDuration(duration);
+        log.info("Rental duration: {}", duration);
 
-        // 3. Obliczenie ceny (w oparciu o pełne dni z zaokrągleniem w górę).
-        long fullDays = ChronoUnit.DAYS.between(start, end);
-
-        // Sprawdzamy, czy jest jakaś "nadwyżka" ponad pełne dni
-        // (np. wynajem od 10 stycznia 10:00 do 11 stycznia 09:59 to prawie 1 dzień,
-        //  a od 10 stycznia 10:00 do 11 stycznia 10:01 to już 2 pełne dni do policzenia).
-        LocalDateTime possibleEnd = start.plusDays(fullDays);
-        if (possibleEnd.isBefore(end)) {
+        // Obliczanie ceny
+        long fullDays = ChronoUnit.DAYS.between(rental.getStartDate(), rental.getEndDate());
+        LocalDateTime possibleEnd = rental.getStartDate().plusDays(fullDays);
+        if (possibleEnd.isBefore(rental.getEndDate())) {
             fullDays++;
         }
-
         Car car = carService.getCarById(rental.getCarId());
         double dailyPrice = car.getPricePerDay();
         double totalPrice = fullDays * dailyPrice;
         rental.setPrice(totalPrice);
+        log.info("Calculated price: {}", totalPrice);
 
-        // 4. Ustawienie statusu (np. od razu RENTED, albo najpierw RESERVED).
+        // Ustawianie statusu
         rental.setStatus(RentalStatus.RENTED);
+        log.info("Rental status set to: {}", rental.getStatus());
 
-        // 5. Zapis do bazy.
+        // Zapisywanie w bazie
         rentalRepository.save(rental);
+        log.info("Rental saved with ID: {}", rental.getId());
+
+        // Wysyłanie e-maila
+        emailService.sendConfirmationEmail(rental);
+        log.info("Confirmation email sent");
     }
+
 
 
     public List<Rental> getAll() {
@@ -111,6 +118,7 @@ public class RentalService {
             rental.setStatus(RentalStatus.RETURNED);
             rentalRepository.save(rental);
             carService.updateCar(car);
+            emailService.sendReturnEmail(rental);
         }
     }
 
@@ -138,30 +146,30 @@ public class RentalService {
         return rentalRepository.findById(rentalId).orElseThrow();
     }
 
-    public boolean isCarAvailableDuring(String carId,
-                                        LocalDateTime start,
-                                        LocalDateTime end) {
-        // 1. Pobieramy wszystkie rezerwacje dla danego auta.
+    public boolean isCarAvailableDuring(String carId, LocalDateTime start, LocalDateTime end) {
         List<Rental> rentalsForCar = rentalRepository.findAllByCarId(carId);
 
-        // 2. Szukamy kolizji w datach z rezerwacjami, które nie mają statusu RETURNED.
         for (Rental r : rentalsForCar) {
+            log.info("Checking rental: ID={} Start={} End={} Status={}",
+                    r.getId(), r.getStartDate(), r.getEndDate(), r.getStatus());
             if (!r.getStatus().equals(RentalStatus.RETURNED)) {
-                // Sprawdzamy, czy [start, end] nakłada się na [rentalStart, rentalEnd]
                 if (datesOverlap(start, end, r.getStartDate(), r.getEndDate())) {
-                    return false; // Kolizja => auto zajęte
+                    log.warn("Collision detected with rental ID={} for car ID={}", r.getId(), carId);
+                    return false; // Auto zajęte
                 }
             }
         }
+        log.info("Car ID={} is available for the period {} to {}", carId, start, end);
         return true; // Brak kolizji
     }
 
-    private boolean datesOverlap(LocalDateTime start1,
-                                 LocalDateTime end1,
-                                 LocalDateTime start2,
-                                 LocalDateTime end2) {
-        return !start1.isAfter(end2) && !end1.isBefore(start2);
+
+    private boolean datesOverlap(LocalDateTime start1, LocalDateTime end1, LocalDateTime start2, LocalDateTime end2) {
+        boolean overlap = !start1.isAfter(end2) && !end1.isBefore(start2);
+        log.info("Dates overlap check: [{} - {}] with [{} - {}] => {}", start1, end1, start2, end2, overlap);
+        return overlap;
     }
+
 
     public void updateRental(Rental rental) {
         rentalRepository.save(rental);

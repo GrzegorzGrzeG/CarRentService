@@ -49,7 +49,7 @@ public class CarController {
     @PostMapping("/add")
     public String processNewCarForm(@ModelAttribute("newCar") Car car) {
         carService.addNewCar(car);
-        return "/html/index";
+        return "redirect:/car_list";
     }
 
     @GetMapping("/delete/{id}")

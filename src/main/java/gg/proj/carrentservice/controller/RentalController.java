@@ -20,12 +20,12 @@ public class RentalController {
     @Autowired
     private final RentalService rentalService;
     private final CarService carService;
-    private final EmailService emailService;
+    private final CustomerService customerService;
 
-    public RentalController(RentalService rentalService, CarService carService, EmailService emailService) {
+    public RentalController(RentalService rentalService, CarService carService, CustomerService customerService) {
         this.rentalService = rentalService;
         this.carService = carService;
-        this.emailService = emailService;
+        this.customerService = customerService;
     }
 
     @GetMapping("/list")
@@ -37,25 +37,37 @@ public class RentalController {
 
     @GetMapping("/add")
     public String newRentalForm(Model model) {
-        model.addAttribute("cars",carService.getAllCarViews(carService.getCarsByAvailable(true)));
+        model.addAttribute("cars", carService.getAllCarViews(carService.getCarsByAvailable(true)));
+        model.addAttribute("customers", customerService.getAllCustomers());
         model.addAttribute("rental", new Rental());
         return "/html/add_rental";
     }
-//todo dodać obłsugę błędów dla innych endpointów i po stronie frontu wyświetlanie tych błędów
+
+    //todo dodać obłsugę błędów dla innych endpointów i po stronie frontu wyświetlanie tych błędów
+    //todo dodać obłsugę dat podczas wynajmu by data oddania nie była późniejsza niż data odbioru
     @PostMapping("/add")
-    public String processNewRentalForm(@ModelAttribute("rental") Rental rental, Model model) {
+    public String processNewRentalForm(@ModelAttribute("rental") Rental rental, @RequestParam("customerId") String customerId, Model model) {
+        log.info("Received rental: {}", rental);
+
+        if (customerId == null || customerId.isEmpty()) {
+            log.error("Customer ID is missing");
+            model.addAttribute("errorMessage", "Customer ID is required");
+            return "/html/add_rental";
+        }
+
+        rental.setCustomerId(customerId);
+
         try {
             rentalService.addNewRental(rental);
-            emailService.sendConfirmationEmail(rental);
         } catch (IllegalArgumentException ex) {
-            // Błąd (np. kolizja terminów)
-            model.addAttribute("errorMessage", "Car is not available in this period");
-            // Ponownie załaduj listę dostępnych samochodów, jeśli to potrzebne
+            log.error("Error while adding rental: {}", ex.getMessage());
+            model.addAttribute("errorMessage", ex.getMessage());
             model.addAttribute("cars", carService.getAllCarViews(carService.getCarsByAvailable(true)));
             return "/html/add_rental";
         }
         return "redirect:/rental/list";
     }
+
 
     @PostMapping("/return")
     public String processReturnRentalForm(@RequestParam("rentalId") String rentalId,

@@ -89,6 +89,12 @@
                         th:value="${rental.rentalId}"
                         onclick="deleteRental(this)">Delete</button>
             </td>
+            <td>
+                <a class="btn btn-warning btn-sm"
+                   th:href="@{/rental/edit/{id}(id=${rental.rentalId})}">
+                    Edit
+                </a>
+            </td>
         </tbody>
     </table>
 </div>

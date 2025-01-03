@@ -102,6 +102,13 @@
             <input type="hidden" name="carId" id="popupCarId" th:field="*{carId}">
 
             <div class="form-group">
+                <label for="customerId">Customer</label>
+                <select class="form-control" id="customerId" name="customerId" required>
+                    <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.pesel}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="startDate">Start Date</label>
                 <input type="datetime-local" class="form-control" id="startDate"
                        th:field="*{startDate}" required>
@@ -116,6 +123,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-secondary" onclick="closePopup()">Cancel</button>
         </form>
+
     </div>
 </div>
 

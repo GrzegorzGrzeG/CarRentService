@@ -27,11 +27,14 @@ public class EmailService {
 
     private boolean sendEmail(String to, String subject, String body) {
         try {
+            log.error("Email sent to: " + to + "with subject: " + subject);
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
+            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setSubject(subject);
             mimeMessageHelper.setText(body, true);
             mailSender.send(mimeMessage);
-            mimeMessageHelper.setTo(to);
+            log.error("Email sent to: " + to + "with subject: " + subject);
             return true;
         } catch (MessagingException e) {
             log.error("Error sending email to: " + to + "with subject: " + subject + " error message: " + e.getMessage());
@@ -39,13 +42,13 @@ public class EmailService {
         }
     }
 
-    public boolean sendConfirmationEmail(Rental rental) {
+    public void sendConfirmationEmail(Rental rental) {
         Car car = carService.getCarById(rental.getCarId());
         Customer customer = customerService.getCustomerById(rental.getCustomerId());
 
         if (Objects.isNull(customer.getEmail())) {
             log.error("Customer with id " + rental.getCustomerId() + " does not have email address");
-            return false;
+            throw new IllegalArgumentException("Customer with id " + rental.getCustomerId() + " does not have email address");
         }
 
         String body = "<!DOCTYPE html> <html><head>" +
@@ -62,15 +65,15 @@ public class EmailService {
 
 
         String subject = "Confirmation of reservation on " + car.getBrand() + " " + car.getModel();
-        return sendEmail(customer.getEmail(), subject, body);
+        sendEmail(customer.getEmail(), subject, body);
     }
 
-    public boolean sendReturnEmail(Rental rental) {
+    public void sendReturnEmail(Rental rental) {
         Customer customer = customerService.getCustomerById(rental.getCustomerId());
 
         if (Objects.isNull(customer.getEmail())) {
             log.error("Customer with id " + rental.getCustomerId() + " does not have email address");
-            return false;
+            throw new IllegalArgumentException("Customer with id " + rental.getCustomerId() + " does not have email address");
         }
 
         String body = "<!DOCTYPE html> <html><head>" +
@@ -86,7 +89,7 @@ public class EmailService {
 
 
         String subject = "Confirmation of the return of the car";
-        return sendEmail(customer.getEmail(), subject, body);
+        sendEmail(customer.getEmail(), subject, body);
     }
 
 
