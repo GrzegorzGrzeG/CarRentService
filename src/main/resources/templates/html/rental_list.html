@@ -78,6 +78,7 @@
                 <div class="dropdown-menu" aria-labelledby="rentalsDropdown">
                     <a class="dropdown-item" th:href="@{/rental/add}">Add</a>
                     <a class="dropdown-item" th:href="@{/rental/list}">List</a>
+                    <a class="dropdown-item" th:href="@{/rental/archive}">Archive</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -118,6 +119,8 @@
             <td th:text="${rental.rentalStatus}"></td>
             <td th:text="${rental.duration}"></td>
             <td th:text="${rental.price}"></td>
+            <td th:text="${rental.condition}"></td>
+            <td th:text="${rental.distance}"></td>
             <td>
                 <button type="button" class="btn btn-primary btn-sm return-button"
                         th:attr="data-rental-id=${rental.rentalId}"

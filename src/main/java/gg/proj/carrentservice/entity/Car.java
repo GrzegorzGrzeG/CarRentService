@@ -41,7 +41,7 @@ public class Car {
     private int numberOfSeats;
     @Min(1)
     private double pricePerDay;
-    private boolean isAvailable;
+    //private boolean isAvailable;
     private LocalDate lastTechnicalReview;
     private LocalDate nextTechnicalReview;
     private LocalDate insuranceValidTo;

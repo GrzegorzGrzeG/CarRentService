@@ -20,7 +20,7 @@ public class CarView {
     private TransmissionType transmission;
     private int numberOfSeats;
     private double pricePerDay;
-    private boolean isAvailable;
+    //private boolean isAvailable;
     private LocalDate lastTechnicalReview;
     private LocalDate nextTechnicalReview;
     private LocalDate insuranceValidTo;

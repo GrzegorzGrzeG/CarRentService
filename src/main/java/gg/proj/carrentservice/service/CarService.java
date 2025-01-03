@@ -27,7 +27,7 @@ public class CarService {
     }
 
     public void addNewCar(Car car) {
-        car.setAvailable(true);
+        //car.setAvailable(true);
         carRepository.save(car);
     }
 
@@ -82,7 +82,7 @@ public class CarService {
         carView.setTransmission(car.getTransmission());
         carView.setNumberOfSeats(car.getNumberOfSeats());
         carView.setPricePerDay(car.getPricePerDay());
-        carView.setAvailable(car.isAvailable());
+        //carView.setAvailable(car.isAvailable());
         carView.setLastTechnicalReview(car.getLastTechnicalReview());
         carView.setNextTechnicalReview(car.getNextTechnicalReview());
         carView.setInsuranceValidTo(car.getInsuranceValidTo());
@@ -108,7 +108,7 @@ public class CarService {
             carView.setTransmission(car.getTransmission());
             carView.setNumberOfSeats(car.getNumberOfSeats());
             carView.setPricePerDay(car.getPricePerDay());
-            carView.setAvailable(car.isAvailable());
+            //carView.setAvailable(car.isAvailable());
             carView.setLastTechnicalReview(car.getLastTechnicalReview());
             carView.setNextTechnicalReview(car.getNextTechnicalReview());
             carView.setInsuranceValidTo(car.getInsuranceValidTo());

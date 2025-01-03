@@ -28,7 +28,7 @@
                     document.getElementById("popupTransmission").textContent = data.transmission;
                     document.getElementById("popupNumberOfSeats").textContent = data.numberOfSeats;
                     document.getElementById("popupPricePerDay").textContent = data.pricePerDay;
-                    document.getElementById("popupIsAvailable").textContent = data.isAvailable ? "Yes" : "No";
+                    //document.getElementById("popupIsAvailable").textContent = data.isAvailable ? "Yes" : "No";
                     document.getElementById("popupLastTechnicalReview").textContent = data.lastTechnicalReview;
                     document.getElementById("popupNextTechnicalReview").textContent = data.nextTechnicalReview;
                     document.getElementById("popupInsuranceValidTo").textContent = data.insuranceValidTo;
@@ -85,6 +85,7 @@
                 <div class="dropdown-menu" aria-labelledby="rentalsDropdown">
                     <a class="dropdown-item" th:href="@{/rental/add}">Add</a>
                     <a class="dropdown-item" th:href="@{/rental/list}">List</a>
+                    <a class="dropdown-item" th:href="@{/rental/archive}">Archive</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -112,7 +113,7 @@
             <th>Transmission Type</th>
             <th>Price Per Day</th>
             <th>Production Year</th>
-            <th>Is Available</th>
+            <!-- <th>Is Available</th> -->
             <th>Actions</th>
         </tr>
         </thead>
@@ -124,7 +125,7 @@
             <td th:text="${car.transmission}"></td>
             <td th:text="${car.pricePerDay}"></td>
             <td th:text="${car.productionYear}"></td>
-            <td th:text="${car.isAvailable ? 'Yes' : 'No'}"></td>
+            <!-- <td th:text="${car.isAvailable ? 'Yes' : 'No'}"></td> -->
             <td>
                 <button type="button" class="btn btn-primary btn-sm"
                         th:attr="data-car-id=${car.id}"
@@ -165,7 +166,7 @@
                     <tr><th>Transmission Type</th><td id="popupTransmission"></td></tr>
                     <tr><th>Number of Seats</th><td id="popupNumberOfSeats"></td></tr>
                     <tr><th>Price Per Day</th><td id="popupPricePerDay"></td></tr>
-                    <tr><th>Is Available</th><td id="popupIsAvailable"></td></tr>
+                    <!-- <tr><th>Is Available</th><td id="popupIsAvailable"></td></tr> -->
                     <tr><th>Last Technical Review</th><td id="popupLastTechnicalReview"></td></tr>
                     <tr><th>Next Technical Review</th><td id="popupNextTechnicalReview"></td></tr>
                     <tr><th>Insurance Valid To</th><td id="popupInsuranceValidTo"></td></tr>

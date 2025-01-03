@@ -23,4 +23,6 @@ public class RentalView {
     private RentalStatus rentalStatus;
     private double price;
     private String duration;
+    private RentalReturnCondition condition;
+    private Long distance;
 }
