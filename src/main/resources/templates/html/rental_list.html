@@ -107,6 +107,7 @@
             <th>Status</th>
             <th>Duration</th>
             <th>Price</th>
+            <th>Distance</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -119,22 +120,24 @@
             <td th:text="${rental.rentalStatus}"></td>
             <td th:text="${rental.duration}"></td>
             <td th:text="${rental.price}"></td>
-            <td th:text="${rental.condition}"></td>
             <td th:text="${rental.distance}"></td>
             <td>
-                <button type="button" class="btn btn-primary btn-sm return-button"
-                        th:attr="data-rental-id=${rental.rentalId}"
-                        onclick="showReturnForm(this)">Return</button>
-                <button type="button" class="btn btn-danger btn-sm"
-                        th:attr="data-rental-id=${rental.rentalId}"
-                        onclick="deleteRental(this)">Delete</button>
-                <a class="btn btn-warning btn-sm"
-                   th:href="@{/rental/edit/{id}(id=${rental.rentalId})}">Edit</a>
+                <div class="d-flex justify-content-around">
+                    <button type="button" class="btn btn-primary btn-sm return-button"
+                            th:attr="data-rental-id=${rental.rentalId}"
+                            onclick="showReturnForm(this)">Return</button>
+                    <button type="button" class="btn btn-danger btn-sm"
+                            th:attr="data-rental-id=${rental.rentalId}"
+                            onclick="deleteRental(this)">Delete</button>
+                    <a class="btn btn-warning btn-sm"
+                       th:href="@{/rental/edit/{id}(id=${rental.rentalId})}">Edit</a>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
 
 <!-- Return Details Modal -->
 <div id="returnDetails" class="modal" tabindex="-1" role="dialog">
